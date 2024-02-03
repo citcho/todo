@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -9,8 +10,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "%s\n", "helloworld")
+		fmt.Fprintf(w, "%s\n", "hello world")
 	})
-
-	http.ListenAndServe(":8090", mux)
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }

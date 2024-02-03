@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: "go.Dockerfile"
+      target: dev
+    platform: linux/x86_64
+    environment:
+      APP_PORT: 8080
+      TODO_ENV: dev
+      TODO_DB_HOST: db
+      TODO_DB_PORT: 3306
+      TODO_DB_NAME: todo_db
+      TODO_DB_USER: todo_db_user
+      TODO_DB_PASSWORD: Secretp@ssw0rd
+      TZ: "Asia/Tokyo"
+    ports:
+      - 8888:8080
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: todo_db
+      MYSQL_USER: todo_db_user
+      MYSQL_PASSWORD: Secretp@ssw0rd
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      LANG: ja_JP.UTF-8
+      LANGUAGE: ja_JP:ja
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+
+volumes:
+  db:
