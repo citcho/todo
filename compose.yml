@@ -6,16 +6,17 @@ services:
       context: .
       dockerfile: "go.Dockerfile"
       target: dev
-    platform: linux/x86_64
+    platform: linux/amd64
     environment:
-      APP_PORT: 8080
       TODO_ENV: dev
-      TODO_DB_HOST: db
-      TODO_DB_PORT: 3306
-      TODO_DB_NAME: todo_db
-      TODO_DB_USER: todo_db_user
-      TODO_DB_PASSWORD: Secretp@ssw0rd
+      TODO_PORT: 8080
+      DB_NAME: todo_db
+      DB_USER: citcho
+      DB_PASS: Secretp@ssw0rd
+      DB_PORT: 3306
+      DB_HOST: db
       TZ: "Asia/Tokyo"
+      BUNDEBUG: 2
     ports:
       - 8888:8080
     volumes:
@@ -25,20 +26,19 @@ services:
 
   db:
     image: mysql:8.0
-    platform: linux/x86_64
+    platform: linux/amd64
     ports:
       - 3306:3306
     volumes:
       - db:/var/lib/mysql
+      - ./_tools/mysql/conf.d:/etc/mysql/conf.d:cached
     environment:
       MYSQL_DATABASE: todo_db
-      MYSQL_USER: todo_db_user
+      MYSQL_USER: citcho
       MYSQL_PASSWORD: Secretp@ssw0rd
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: Secretp@ssw0rd
       LANG: ja_JP.UTF-8
       LANGUAGE: ja_JP:ja
       TZ: "Asia/Tokyo"
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
-
 volumes:
   db:
