@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: "go.Dockerfile"
       target: dev
+    working_dir: /app
     platform: linux/amd64
     environment:
       TODO_ENV: dev

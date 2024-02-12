@@ -1,10 +1,11 @@
 module github.com/hexisa_go_nal_todo
 
-go 1.21.6
+go 1.22.0
 
 require (
 	github.com/caarlos0/env/v10 v10.0.0
 	github.com/go-sql-driver/mysql v1.7.1
+	github.com/golang/mock v1.6.0
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/uptrace/bun v1.1.17
 	github.com/uptrace/bun/dialect/mysqldialect v1.1.17
@@ -21,6 +22,6 @@ require (
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
-	golang.org/x/mod v0.14.0 // indirect
+	golang.org/x/mod v0.15.0 // indirect
 	golang.org/x/sys v0.17.0 // indirect
 )

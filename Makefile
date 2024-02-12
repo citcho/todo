@@ -14,16 +14,16 @@ ps: ## Check container status
 	docker compose ps
 
 test: ## Execute tests
-	docker compose exec app go test -v -race -shuffle=on ./...
+	docker compose exec api go test -v -race -shuffle=on ./...
 
 test-integration: ## Execute integration tests
-	docker compose exec app go test -v -tags=integration ./...
+	docker compose exec api go test -v -tags=integration ./...
 
 migrate: ## Execute migration
-	docker compose exec app mysqldef -u citcho -p Secretp@ssw0rd -h db -P 3306 todo_db < ./_tools/mysql/schema.sql
+	docker compose exec -T api mysqldef -u citcho -p Secretp@ssw0rd -h db -P 3306 todo_db < ./_tools/mysql/schema.sql
 
 generate: ## Generate codes
-	docker compose exec app go generate ./...
+	docker compose exec api go generate ./...
 
 generate-key: ## Generate key pair for JWT
 	openssl genrsa 4096 -out ./internal/common/auth/cert/secret.pem && \

@@ -1,16 +1,37 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
-	"net/http"
+	"net"
+	"os"
+
+	"github.com/hexisa_go_nal_todo/internal/common/config"
+	"github.com/hexisa_go_nal_todo/internal/common/server"
 )
 
 func main() {
-	mux := http.NewServeMux()
+	if err := run(context.Background()); err != nil {
+		log.Printf("failed to terminated server: %v", err)
+		os.Exit(1)
+	}
+}
 
-	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "%s\n", "hello world")
-	})
-	log.Fatal(http.ListenAndServe(":8080", mux))
+func run(ctx context.Context) error {
+	cfg := config.NewConfig()
+
+	mux, cleanup, err := server.NewMux(ctx, cfg)
+	defer cleanup()
+	if err != nil {
+		return err
+	}
+
+	l, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Server.AppPort))
+	if err != nil {
+		log.Fatalf("failed to listen port %d: %v", cfg.Server.AppPort, err)
+	}
+
+	s := server.NewServer(l, mux)
+	return s.Run(ctx)
 }
