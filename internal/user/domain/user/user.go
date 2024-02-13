@@ -45,6 +45,22 @@ func NewUser(
 	return u, nil
 }
 
+func ReConstructFromRepository(
+	ulid string,
+	name string,
+	email string,
+	password string,
+) *User {
+	u := &User{
+		ulid:     ulid,
+		name:     name,
+		email:    email,
+		password: password,
+	}
+
+	return u
+}
+
 func (r User) Ulid() string {
 	return r.ulid
 }

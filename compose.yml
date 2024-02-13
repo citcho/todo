@@ -9,6 +9,7 @@ services:
     working_dir: /app
     platform: linux/amd64
     environment:
+      TODO_HOST: localhost
       TODO_ENV: dev
       TODO_PORT: 8080
       DB_NAME: todo_db

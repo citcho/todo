@@ -26,8 +26,9 @@ generate: ## Generate codes
 	docker compose exec api go generate ./...
 
 generate-key: ## Generate key pair for JWT
-	openssl genrsa 4096 -out ./internal/common/auth/cert/secret.pem && \
-	openssl rsa -pubout -in ./internal/common/auth/cert/secret.pem -out ./internal/common/auth/cert/public.pem
+	openssl genrsa -out ./internal/common/auth/cert/secret.pem 4096 && \
+    openssl rsa -in ./internal/common/auth/cert/secret.pem -pubout -out ./internal/common/auth/cert/public.pem
+
 
 help: ## Show options
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \

@@ -4,11 +4,6 @@ import (
 	"context"
 )
 
-//go:generate mockgen -source=./service.go -destination=./mock/user_repository.go -package=mock
-type IUserRepository interface {
-	Exists(context.Context, *User) (bool, error)
-}
-
 type UserService struct {
 	ur IUserRepository
 }

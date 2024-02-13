@@ -9,11 +9,6 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 )
 
-type IUserRepository interface {
-	Save(context.Context, *user.User) error
-	Exists(context.Context, *user.User) (bool, error)
-}
-
 type SignupCommand struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
@@ -21,11 +16,11 @@ type SignupCommand struct {
 }
 
 type SignupHandler struct {
-	ur IUserRepository
+	ur user.IUserRepository
 	us *user.UserService
 }
 
-func NewSignupHandler(ur IUserRepository) *SignupHandler {
+func NewSignupHandler(ur user.IUserRepository) *SignupHandler {
 	return &SignupHandler{
 		ur: ur,
 		us: user.NewUserService(ur),

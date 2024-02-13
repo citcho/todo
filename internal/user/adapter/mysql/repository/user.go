@@ -59,3 +59,43 @@ func (ur *UserRepository) Save(ctx context.Context, u *user.User) error {
 
 	return nil
 }
+
+func (ur *UserRepository) FetchByEmail(ctx context.Context, email string) (*user.User, error) {
+	var u dao.User
+	err := ur.db.NewSelect().
+		Model(&u).
+		Where("email = ?", email).
+		Scan(ctx)
+	if err != nil {
+		return &user.User{}, err
+	}
+
+	domainUser := user.ReConstructFromRepository(
+		u.Ulid,
+		u.Name,
+		u.Email,
+		u.Password,
+	)
+
+	return domainUser, nil
+}
+
+func (ur *UserRepository) FetchByUlid(ctx context.Context, ulid string) (*user.User, error) {
+	var u dao.User
+	err := ur.db.NewSelect().
+		Model(&u).
+		Where("ulid = ?", ulid).
+		Scan(ctx)
+	if err != nil {
+		return &user.User{}, err
+	}
+
+	domainUser := user.ReConstructFromRepository(
+		u.Ulid,
+		u.Name,
+		u.Email,
+		u.Password,
+	)
+
+	return domainUser, nil
+}
