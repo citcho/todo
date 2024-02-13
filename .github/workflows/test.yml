@@ -36,8 +36,15 @@ jobs:
     steps:
       - uses: actions/setup-go@v4
         with:
-          go-version: '>=1.21.6'
+          go-version: '>=1.22.0'
       - uses: actions/checkout@v4
+
+      - name: Create Private Key File
+        run: |
+          echo "${{ secrets.PRIVATE_KEY }}" > ./internal/common/auth/cert/secret.pem
+      - name: Create Public Key File
+        run: |
+          echo "${{ secrets.PUBLIC_KEY }}" > ./internal/common/auth/cert/public.pem
 
     #   - run: |
     #       go install github.com/k0kubun/sqldef/cmd/mysqldef@latest
