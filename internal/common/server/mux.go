@@ -9,10 +9,13 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/common/clock"
 	"github.com/hexisa_go_nal_todo/internal/common/config"
 	"github.com/hexisa_go_nal_todo/internal/common/database"
-	"github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/repository"
-	"github.com/hexisa_go_nal_todo/internal/user/app/command"
+	todo_repository "github.com/hexisa_go_nal_todo/internal/todo/adapter/mysql/repository"
+	todo_command "github.com/hexisa_go_nal_todo/internal/todo/app/command"
+	todo_presentation "github.com/hexisa_go_nal_todo/internal/todo/presentation"
+	user_repository "github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/repository"
+	user_command "github.com/hexisa_go_nal_todo/internal/user/app/command"
 	"github.com/hexisa_go_nal_todo/internal/user/app/query"
-	"github.com/hexisa_go_nal_todo/internal/user/presentation"
+	user_presentation "github.com/hexisa_go_nal_todo/internal/user/presentation"
 )
 
 func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), error) {
@@ -28,18 +31,24 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 		log.Fatalf("%s", err.Error())
 	}
 
-	ur := repository.NewUserRepository(db)
+	userRepository := user_repository.NewUserRepository(db)
 
-	sh := command.NewSignupHandler(ur)
-	mux.Handle("POST /signup", presentation.NewSignupController(sh))
+	signupHandler := user_command.NewSignupHandler(userRepository)
+	mux.Handle("POST /signup", user_presentation.NewSignupController(signupHandler))
 
-	lh := command.NewLoginHandler(ur, jwter)
-	mux.Handle("POST /login", presentation.NewLoginController(lh))
+	loginHandler := user_command.NewLoginHandler(userRepository, jwter)
+	mux.Handle("POST /login", user_presentation.NewLoginController(loginHandler))
 
-	gcuh := query.NewGetCurrentUserHandler(ur)
-	gcuc := presentation.NewGetCurrentUserController(gcuh)
+	getCurrentUserHandler := query.NewGetCurrentUserHandler(userRepository)
+	getCurrentUserController := user_presentation.NewGetCurrentUserController(getCurrentUserHandler)
 
-	mux.Handle("/me", with(gcuc, jwtMiddleware(jwter)))
+	mux.Handle("/me", with(getCurrentUserController, jwtMiddleware(jwter)))
+
+	todoRepository := todo_repository.NewTodoRepository(db)
+	storeHandler := todo_command.NewStoreHandler(todoRepository)
+	storeController := todo_presentation.NewStoreController(storeHandler)
+
+	mux.Handle("POST /todos", with(storeController, jwtMiddleware(jwter)))
 
 	return mux, cleanup, nil
 }

@@ -29,7 +29,6 @@ generate-key: ## Generate key pair for JWT
 	openssl genrsa -out ./internal/common/auth/cert/secret.pem 4096 && \
     openssl rsa -in ./internal/common/auth/cert/secret.pem -pubout -out ./internal/common/auth/cert/public.pem
 
-
 help: ## Show options
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
