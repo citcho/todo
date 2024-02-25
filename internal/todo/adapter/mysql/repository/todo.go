@@ -96,3 +96,27 @@ func (tr *TodoRepository) Update(ctx context.Context, t *todo.Todo) error {
 
 	return nil
 }
+
+func (tr *TodoRepository) FindAll(ctx context.Context, userId string) ([]*todo.Todo, error) {
+	var todos []*dao.Todo
+	err := tr.db.NewSelect().
+		Model(&todos).
+		Where("user_ulid = ?", userId).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*todo.Todo
+	for _, t := range todos {
+		result = append(result, todo.ReConstructFromRepository(
+			t.Ulid,
+			t.UserUlid,
+			t.Title,
+			t.Content,
+			t.Completed,
+		))
+	}
+
+	return result, nil
+}

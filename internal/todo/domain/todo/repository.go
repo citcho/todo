@@ -9,4 +9,5 @@ type ITodoRepository interface {
 	Save(context.Context, *Todo) error
 	FindById(context.Context, string) (*Todo, error)
 	Update(context.Context, *Todo) error
+	FindAll(context.Context, string) ([]*Todo, error)
 }
