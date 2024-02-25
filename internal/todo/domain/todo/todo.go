@@ -1,26 +1,20 @@
 package todo
 
 import (
+	"context"
 	"errors"
 	"unicode/utf8"
+
+	"github.com/hexisa_go_nal_todo/internal/common/auth"
 )
 
 type Todo struct {
-	ulid    string
-	userId  string
-	title   string
-	content string
-	status  Status
+	ulid      string
+	userId    string
+	title     string
+	content   string
+	completed int
 }
-
-//go:generate stringer -type Status
-type Status int
-
-const (
-	_ Status = iota
-	Yet
-	Done
-)
 
 func NewTodo(
 	ulid string,
@@ -36,14 +30,33 @@ func NewTodo(
 	}
 
 	t := &Todo{
-		ulid:    ulid,
-		userId:  userId,
-		title:   title,
-		content: content,
-		status:  Yet,
+		ulid:      ulid,
+		userId:    userId,
+		title:     title,
+		content:   content,
+		completed: 0,
 	}
 
 	return t, nil
+}
+
+func (t Todo) canCompleteTodo(id string) bool {
+	return id == t.userId
+}
+
+func (t *Todo) Complete(ctx context.Context) error {
+	id, ok := auth.GetUserID(ctx)
+	if !ok {
+		return errors.New("ユーザーIDを取得できませんでした。")
+	}
+
+	if !t.canCompleteTodo(id) {
+		return errors.New("Todoの完了に失敗しました。")
+	}
+
+	t.completed = 1
+
+	return nil
 }
 
 func ReConstructFromRepository(
@@ -51,14 +64,14 @@ func ReConstructFromRepository(
 	userId string,
 	title string,
 	content string,
-	status Status,
+	completed int,
 ) *Todo {
 	t := &Todo{
-		ulid:    ulid,
-		userId:  userId,
-		title:   title,
-		content: content,
-		status:  status,
+		ulid:      ulid,
+		userId:    userId,
+		title:     title,
+		content:   content,
+		completed: completed,
 	}
 
 	return t
@@ -80,6 +93,6 @@ func (t Todo) Content() string {
 	return t.content
 }
 
-func (t Todo) Status() Status {
-	return t.status
+func (t Todo) Completed() int {
+	return t.completed
 }

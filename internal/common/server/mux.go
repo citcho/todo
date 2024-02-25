@@ -45,10 +45,14 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	mux.Handle("/me", with(getCurrentUserController, jwtMiddleware(jwter)))
 
 	todoRepository := todo_repository.NewTodoRepository(db)
+
 	storeHandler := todo_command.NewStoreHandler(todoRepository)
 	storeController := todo_presentation.NewStoreController(storeHandler)
-
 	mux.Handle("POST /todos", with(storeController, jwtMiddleware(jwter)))
+
+	completeHandler := todo_command.NewCompleteHandler(todoRepository)
+	completeController := todo_presentation.NewCompleteController(completeHandler)
+	mux.Handle("PATCH /todos/{id}/complete", with(completeController, jwtMiddleware(jwter)))
 
 	return mux, cleanup, nil
 }

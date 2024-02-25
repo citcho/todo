@@ -17,7 +17,7 @@ CREATE TABLE `todos`
     `user_ulid` CHAR(26) NOT NULL COMMENT 'Todoを作成したユーザーの識別子',
     `title` VARCHAR(255) NOT NULL COMMENT 'Todoのタイトル',
     `content` TEXT COMMENT 'Todoの内容',
-    `status` VARCHAR(20) NOT NULL COMMENT 'Todoの状態',
+    `completed` INT NOT NULL COMMENT 'Todoの状態',
     `created_at` DATETIME NOT NULL COMMENT '作成日時',
     `updated_at` DATETIME NOT NULL COMMENT '更新日時',
     `deleted_at` DATETIME COMMENT '削除日時',

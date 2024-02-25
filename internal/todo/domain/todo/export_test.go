@@ -1,11 +1,11 @@
 package todo
 
-func NewTodoFixture(ulid string, userUlid string, title string, content string, status Status) *Todo {
+func NewTodoFixture(ulid string, userUlid string, title string, content string, completed int) *Todo {
 	return &Todo{
-		ulid:    ulid,
-		userId:  userUlid,
-		title:   title,
-		content: content,
-		status:  status,
+		ulid:      ulid,
+		userId:    userUlid,
+		title:     title,
+		content:   content,
+		completed: completed,
 	}
 }

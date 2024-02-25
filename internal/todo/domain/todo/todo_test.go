@@ -14,7 +14,7 @@ func TestNewTodo(t *testing.T) {
 		"01HQ3M72Y0AXV0MNPHTXP96C4M",
 		"test",
 		"test",
-		todo.Yet,
+		0,
 	)
 	type args struct {
 		ulid    string

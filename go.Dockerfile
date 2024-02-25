@@ -39,7 +39,6 @@ RUN go install -v golang.org/x/tools/gopls@latest \
     && go install github.com/cosmtrek/air@latest \
     && go install github.com/sqldef/sqldef/cmd/mysqldef@latest \
     && go install github.com/cweill/gotests/gotests@latest \
-    && go install golang.org/x/tools/cmd/stringer@latest \
     && go install github.com/cweill/gotests/gotests@latest
 
 CMD ["air", "-c", "./.air.toml"]

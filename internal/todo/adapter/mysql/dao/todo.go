@@ -12,7 +12,7 @@ type Todo struct {
 	UserUlid  string    `bun:",pk,type:char(26),notnull"`
 	Title     string    `bun:",notnull"`
 	Content   string    `bun:",type:text,notnull"`
-	Status    string    `bun:",type:varchar(255),notnull"`
+	Completed int       `bun:",type:int,notnull"`
 	CreatedAt time.Time `bun:",notnull"`
 	UpdatedAt time.Time `bun:",notnull"`
 	DeletedAt time.Time `bun:",soft_delete,nullzero"`
