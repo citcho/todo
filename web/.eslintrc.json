@@ -1,0 +1,137 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "18.2"
+    },
+    "import/resolver": {
+      "alias": {
+        "map": [["@", "./src"]],
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    }
+  },
+  "plugins": ["react-refresh", "unused-imports"],
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:storybook/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling"],
+          "object",
+          "type",
+          "index"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          { "pattern": "@/libs/**", "group": "internal", "position": "before" },
+          {
+            "pattern": "@/hooks/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/stores/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/routes/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/repositories/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/utils/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/styles/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**.module.css",
+            "group": "index",
+            "position": "before"
+          }
+        ]
+      }
+    ],
+    "react-refresh/only-export-components": "warn",
+    "import/prefer-default-export": "off",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "react/jsx-filename-extension": ["error", { "extensions": [".jsx"] }],
+    "react/jsx-props-no-spreading": "off",
+    "import/no-default-export": "error",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "arrow-body-style": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/stories/**",
+          "**/.storybook/**",
+          "**/*.stories.{js,jsx}",
+          "vite.config.js"
+        ]
+      }
+    ],
+    "camelcase": ["error", { "ignoreImports": true, "properties": "never" }],
+    "react/button-has-type": "off",
+    "no-console": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.stories.{js,jsx}", "vite.config.js"],
+      "rules": { "import/no-default-export": "off" }
+    }
+  ]
+}

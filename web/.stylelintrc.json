@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    "stylelint-order",
+    "stylelint-declaration-block-no-ignored-properties"
+  ],
+  "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
+  "rules": {
+    "order/order": ["custom-properties", "declarations"],
+    "plugin/declaration-block-no-ignored-properties": true,
+    "selector-class-pattern": null
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.{css}"]
+    }
+  ]
+}

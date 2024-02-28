@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,300,700,900');
+
+:root {
+  /* Main & Accent Color */
+  --color-primary: #563bff;
+  --color-secondary: #fc783f;
+  --color-accent-red: #dc2647;
+
+  /* Background Color */
+  --color-bg-purple-light: #f8f9fd;
+  --color-bg-white: #fff;
+  --color-bg-success: #ebfff0;
+  --color-bg-danger: #fde7e7;
+  --color-bg-warning: #fdf0e7;
+  --color-bg-disable: #ccc;
+  --color-bg-info: #ebf8ff;
+  --color-bg-hover: #f2fcff;
+  --color-bg-purple: #e9e7fd;
+
+  /* Text Color */
+  --color-text-main: #21213b;
+  --color-text-white: #fff;
+  --color-text-red: #ff3b3b;
+  --color-text-purple: #7979b4;
+  --color-text-purple-dark: #68688a;
+
+  /* Border Color */
+  --color-border: #cdcde0;
+  --color-border-light: #f4f4fa;
+  --color-border-success: #23f55e;
+  --color-border-danger: #ff3b3b;
+  --color-border-warning: #ff6a3b;
+  --color-border-info: #2390f5;
+
+  /* Shadow Color */
+  --hover-interactive-element-opacity: 0.8;
+  --hover-interactive-element-duration: 0.2s;
+
+  /* Font Weight */
+  --font-weight-regular: 400;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+
+  /* Toastify Variable */
+  --toastify-toast-width: auto;
+}
+
+html,
+body {
+  max-width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Lato', 'Noto Sans JP', 'Helvetica Neue', Arial,
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #c0c0c0;
+}
+
+h1,
+h2 {
+  font-family: 'Raleway', 'Noto Sans JP', 'Helvetica Neue', Arial,
+  'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+.Toastify__toast-container {
+  top: 5.5px;
+}
