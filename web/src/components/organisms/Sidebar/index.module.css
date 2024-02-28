@@ -1,0 +1,25 @@
+.sidebar {
+  background-color: #74cfae;
+  padding: 20px;
+}
+
+.list {
+  list-style: none;
+}
+
+.item {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.item:first-child {
+  margin-top: 0;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  font-size: 20px;
+}

@@ -1,0 +1,40 @@
+.toast-message-success {
+  padding: 6px;
+  font-size: 14px;
+  color: var(--color-text-main);
+  background-color: var(--color-bg-success);
+  border-radius: 5px;
+  outline: solid 1px var(--color-border-success);
+  outline-offset: -1px;
+  box-shadow: 2px 2px 4px var(--color-border);
+}
+
+.toast-message-error {
+  padding: 6px;
+  font-size: 14px;
+  color: var(--color-text-main);
+  background-color: var(--color-bg-danger);
+  border: solid 1px var(--color-border-danger);
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px var(--color-border);
+}
+
+.toast-message-info {
+  padding: 6px;
+  font-size: 14px;
+  color: var(--color-text-main);
+  background-color: var(--color-bg-info);
+  border: solid 1px var(--color-border-info);
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px var(--color-border);
+}
+
+.toast-message-warning {
+  padding: 6px;
+  font-size: 14px;
+  color: var(--color-text-main);
+  background-color: var(--color-bg-warning);
+  border: solid 1px var(--color-border-warning);
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px var(--color-border);
+}

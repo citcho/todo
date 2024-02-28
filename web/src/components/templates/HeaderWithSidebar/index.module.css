@@ -1,0 +1,21 @@
+.layout {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+.main {
+  background-color: #f2f2f2;
+  padding: 24px 36px;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
