@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/hexisa_go_nal_todo/internal/common/auth"
+	"github.com/hexisa_go_nal_todo/internal/common/config"
 )
 
 type Middleware interface {
@@ -31,6 +32,18 @@ func jwtMiddleware(j *auth.JWTer) MiddlewareFunc {
 				http.Error(w, "Unauthorized", http.StatusUnauthorized)
 				return
 			}
+			h.ServeHTTP(w, r)
+		})
+	}
+}
+
+func corsMiddleware(cfg config.Server) MiddlewareFunc {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", cfg.ClientUrl)
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PATCH")
+			w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
 			h.ServeHTTP(w, r)
 		})
 	}

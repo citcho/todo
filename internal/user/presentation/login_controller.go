@@ -31,14 +31,17 @@ func (lc *LoginController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO: nginxでSSL設定後にSecureを有効にする
 	cookie := http.Cookie{
 		Name:    "token",
 		Value:   jwt,
-		Expires: time.Now().Add(24 * time.Hour),
 		Path:    "/",
+		Domain:  "localhost",
+		Expires: time.Now().Add(24 * time.Hour),
 		// Secure:   true,
-		// HttpOnly: true,
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
+
+	w.WriteHeader(http.StatusOK)
 }

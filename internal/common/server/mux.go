@@ -26,6 +26,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	}
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("OPTIONS /{path...}", preflight)
 
 	jwter, err := auth.NewJWTer(clock.RealClocker{})
 	if err != nil {
@@ -38,12 +39,12 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	mux.Handle("POST /signup", user_presentation.NewSignupController(signupHandler))
 
 	loginHandler := user_command.NewLoginHandler(userRepository, jwter)
-	mux.Handle("POST /login", user_presentation.NewLoginController(loginHandler))
+	mux.Handle("POST /login", with(user_presentation.NewLoginController(loginHandler), corsMiddleware(cfg.Server)))
 
 	getCurrentUserHandler := user_query.NewGetCurrentUserHandler(userRepository)
 	getCurrentUserController := user_presentation.NewGetCurrentUserController(getCurrentUserHandler)
 
-	mux.Handle("/me", with(getCurrentUserController, jwtMiddleware(jwter)))
+	mux.Handle("GET /me", with(getCurrentUserController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
 	todoRepository := todo_repository.NewTodoRepository(db)
 
@@ -60,4 +61,12 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	mux.Handle("GET /todos", with(getTodosController, jwtMiddleware(jwter)))
 
 	return mux, cleanup, nil
+}
+
+func preflight(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.WriteHeader(http.StatusOK)
 }

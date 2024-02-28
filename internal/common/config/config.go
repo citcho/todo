@@ -25,9 +25,10 @@ type DB struct {
 }
 
 type Server struct {
-	TodoHost string `env:"TODO_HOST"`
-	TodoEnv  string `env:"TODO_ENV"`
-	AppPort  int    `env:"TODO_PORT"`
+	ClientUrl string `env:"CLIENT_URL"`
+	TodoHost  string `env:"TODO_HOST"`
+	TodoEnv   string `env:"TODO_ENV"`
+	AppPort   int    `env:"TODO_PORT"`
 }
 
 func NewConfig() *Config {
