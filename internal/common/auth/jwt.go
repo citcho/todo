@@ -60,7 +60,7 @@ func (j *JWTer) GenerateToken(ctx context.Context, u *user.User) ([]byte, error)
 		Subject("access_token").
 		IssuedAt(j.Clocker.Now()).
 		Expiration(j.Clocker.Now().Add(30*time.Minute)).
-		Claim("user_id", u.Ulid()).
+		Claim("user_id", u.Id()).
 		Build()
 	if err != nil {
 		return nil, fmt.Errorf("GenerateToken: failed to build token: %w", err)

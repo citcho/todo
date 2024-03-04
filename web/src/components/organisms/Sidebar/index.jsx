@@ -13,6 +13,11 @@ export const Sidebar = memo(() => {
           </NavLink>
         </li>
         <li className={styles['item']}>
+          <NavLink to='/todos/create' className={styles['link']}>
+            New
+          </NavLink>
+        </li>
+        <li className={styles['item']}>
           <NavLink to='/todos' className={styles['link']}>
             Yet
           </NavLink>

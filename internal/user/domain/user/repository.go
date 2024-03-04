@@ -9,5 +9,5 @@ type IUserRepository interface {
 	Save(context.Context, *User) error
 	Exists(context.Context, *User) (bool, error)
 	FetchByEmail(context.Context, string) (*User, error)
-	FetchByUlid(context.Context, string) (*User, error)
+	FetchById(context.Context, string) (*User, error)
 }

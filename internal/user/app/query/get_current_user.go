@@ -13,9 +13,8 @@ type GetCurrentUserHandler struct {
 }
 
 type GetCurrentUserDto struct {
-	UserId string `json:"user_id"`
-	Name   string `json:"name"`
-	Email  string `json:"email"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 func NewGetCurrentUserHandler(ur user.IUserRepository) *GetCurrentUserHandler {
@@ -30,15 +29,14 @@ func (gcuh *GetCurrentUserHandler) Handle(ctx context.Context) (GetCurrentUserDt
 		return GetCurrentUserDto{}, fmt.Errorf("ユーザーが存在しません")
 	}
 
-	u, err := gcuh.ur.FetchByUlid(ctx, userId)
+	u, err := gcuh.ur.FetchById(ctx, userId)
 	if err != nil {
 		return GetCurrentUserDto{}, fmt.Errorf("対象のユーザーが存在しません")
 	}
 
 	dto := GetCurrentUserDto{
-		UserId: u.Ulid(),
-		Name:   u.Name(),
-		Email:  u.Email(),
+		Name:  u.Name(),
+		Email: u.Email(),
 	}
 
 	return dto, nil

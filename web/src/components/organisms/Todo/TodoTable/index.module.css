@@ -1,0 +1,23 @@
+.align-left {
+  text-align: left;
+}
+
+.size--sm {
+  width: 36%;
+}
+
+.size--md {
+  width: 48%;
+}
+
+.size--auto {
+  width: auto;
+}
+
+.complete-button {
+  font-size: 3rem;
+  line-height: 1;
+  color: #74cfae;
+  cursor: pointer;
+  border: none;
+}

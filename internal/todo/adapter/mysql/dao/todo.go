@@ -7,13 +7,13 @@ import (
 )
 
 type Todo struct {
-	Ulid      string    `bun:",pk,type:char(26)"`
-	User      *dao.User `bun:",rel:belongs-to"`
-	UserUlid  string    `bun:",pk,type:char(26),notnull"`
-	Title     string    `bun:",notnull"`
-	Content   string    `bun:",type:text,notnull"`
-	Completed int       `bun:",type:int,notnull"`
-	CreatedAt time.Time `bun:",notnull"`
-	UpdatedAt time.Time `bun:",notnull"`
-	DeletedAt time.Time `bun:",soft_delete,nullzero"`
+	Id         string    `bun:",pk,type:char(26)"`
+	User       *dao.User `bun:",rel:belongs-to"`
+	UserId     string    `bun:",type:char(26),notnull"`
+	Title      string    `bun:",notnull"`
+	Content    string    `bun:",type:text,notnull"`
+	IsComplete bool      `bun:",type:int,notnull"`
+	CreatedAt  time.Time `bun:",notnull"`
+	UpdatedAt  time.Time `bun:",notnull"`
+	DeletedAt  time.Time `bun:",soft_delete,nullzero"`
 }

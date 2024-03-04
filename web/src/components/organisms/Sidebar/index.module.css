@@ -1,6 +1,6 @@
 .sidebar {
-  background-color: #74cfae;
   padding: 20px;
+  background-color: #74cfae;
 }
 
 .list {
@@ -17,9 +17,17 @@
 }
 
 .link {
-  color: #fff;
-  text-decoration: none;
   display: inline-block;
   width: 100%;
+  padding: 10px 0;
   font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.link:hover {
+  color: #74cfae;
+  background-color: #fff;
 }

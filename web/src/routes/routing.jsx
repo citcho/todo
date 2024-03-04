@@ -5,6 +5,7 @@ import { Login } from '@/components/pages/Login'
 import { Todo } from '@/components/pages/Todo'
 import { List } from '@/components/pages/Todo/List'
 import { CompleteList } from '@/components/pages/Todo/CompleteList'
+import { Create } from '@/components/pages/Todo/Create'
 
 export const router = (checkLogin) => {
   return createBrowserRouter([
@@ -24,6 +25,7 @@ export const router = (checkLogin) => {
       children: [
         { index: true, element: <List /> },
         { path: 'complete', element: <CompleteList /> },
+        { path: 'create', element: <Create /> },
       ],
     },
   ])

@@ -24,13 +24,13 @@ func NewTodoRepository(db *bun.DB) *TodoRepository {
 
 func (tr *TodoRepository) Save(ctx context.Context, t *todo.Todo) error {
 	todo := dao.Todo{
-		Ulid:      t.Ulid(),
-		UserUlid:  t.UserId(),
-		Title:     t.Title(),
-		Content:   t.Content(),
-		Completed: t.Completed(),
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		Id:         t.Id(),
+		UserId:     t.UserId(),
+		Title:      t.Title(),
+		Content:    t.Content(),
+		IsComplete: t.IsComplete(),
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
 	}
 
 	_, err := tr.db.NewInsert().
@@ -50,21 +50,22 @@ func (tr *TodoRepository) Save(ctx context.Context, t *todo.Todo) error {
 }
 
 func (tr *TodoRepository) FindById(ctx context.Context, id string) (*todo.Todo, error) {
-	var t dao.Todo
+	t := dao.Todo{Id: id}
 	err := tr.db.NewSelect().
 		Model(&t).
-		Where("ulid = ?", id).
+		WherePK().
 		Scan(ctx)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 
 	todo := todo.ReConstructFromRepository(
-		t.Ulid,
-		t.UserUlid,
+		t.Id,
+		t.UserId,
 		t.Title,
 		t.Content,
-		t.Completed,
+		t.IsComplete,
 	)
 
 	return todo, nil
@@ -72,17 +73,17 @@ func (tr *TodoRepository) FindById(ctx context.Context, id string) (*todo.Todo, 
 
 func (tr *TodoRepository) Update(ctx context.Context, t *todo.Todo) error {
 	todo := dao.Todo{
-		Ulid:      t.Ulid(),
-		UserUlid:  t.UserId(),
-		Title:     t.Title(),
-		Content:   t.Content(),
-		Completed: t.Completed(),
-		UpdatedAt: time.Now(),
+		Id:         t.Id(),
+		UserId:     t.UserId(),
+		Title:      t.Title(),
+		Content:    t.Content(),
+		IsComplete: t.IsComplete(),
 	}
 
 	_, err := tr.db.NewUpdate().
 		Model(&todo).
-		Where("ulid = ?", t.Ulid()).
+		WherePK().
+		OmitZero().
 		Exec(ctx)
 	if err != nil {
 		var mysqlErr *mysql.MySQLError
@@ -90,7 +91,6 @@ func (tr *TodoRepository) Update(ctx context.Context, t *todo.Todo) error {
 			log.Println(err)
 			return errors.New("予期せぬエラーが発生しました。管理者にお問い合わせください。")
 		}
-
 		return err
 	}
 
@@ -101,7 +101,7 @@ func (tr *TodoRepository) FindAll(ctx context.Context, userId string) ([]*todo.T
 	var todos []*dao.Todo
 	err := tr.db.NewSelect().
 		Model(&todos).
-		Where("user_ulid = ?", userId).
+		Where("user_id = ?", userId).
 		Scan(ctx)
 	if err != nil {
 		return nil, err
@@ -110,11 +110,11 @@ func (tr *TodoRepository) FindAll(ctx context.Context, userId string) ([]*todo.T
 	var result []*todo.Todo
 	for _, t := range todos {
 		result = append(result, todo.ReConstructFromRepository(
-			t.Ulid,
-			t.UserUlid,
+			t.Id,
+			t.UserId,
 			t.Title,
 			t.Content,
-			t.Completed,
+			t.IsComplete,
 		))
 	}
 

@@ -9,15 +9,15 @@ import (
 )
 
 type Todo struct {
-	ulid      string
-	userId    string
-	title     string
-	content   string
-	completed int
+	id         string
+	userId     string
+	title      string
+	content    string
+	isComplete bool
 }
 
 func NewTodo(
-	ulid string,
+	id string,
 	userId string,
 	title string,
 	content string,
@@ -30,11 +30,11 @@ func NewTodo(
 	}
 
 	t := &Todo{
-		ulid:      ulid,
-		userId:    userId,
-		title:     title,
-		content:   content,
-		completed: 0,
+		id:         id,
+		userId:     userId,
+		title:      title,
+		content:    content,
+		isComplete: false,
 	}
 
 	return t, nil
@@ -54,31 +54,31 @@ func (t *Todo) Complete(ctx context.Context) error {
 		return errors.New("Todoの完了に失敗しました。")
 	}
 
-	t.completed = 1
+	t.isComplete = true
 
 	return nil
 }
 
 func ReConstructFromRepository(
-	ulid string,
+	id string,
 	userId string,
 	title string,
 	content string,
-	completed int,
+	isComplete bool,
 ) *Todo {
 	t := &Todo{
-		ulid:      ulid,
-		userId:    userId,
-		title:     title,
-		content:   content,
-		completed: completed,
+		id:         id,
+		userId:     userId,
+		title:      title,
+		content:    content,
+		isComplete: isComplete,
 	}
 
 	return t
 }
 
-func (t Todo) Ulid() string {
-	return t.ulid
+func (t Todo) Id() string {
+	return t.id
 }
 
 func (t Todo) UserId() string {
@@ -93,6 +93,6 @@ func (t Todo) Content() string {
 	return t.content
 }
 
-func (t Todo) Completed() int {
-	return t.completed
+func (t Todo) IsComplete() bool {
+	return t.isComplete
 }

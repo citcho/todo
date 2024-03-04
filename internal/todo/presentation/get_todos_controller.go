@@ -12,11 +12,10 @@ type GetTodosController struct {
 }
 
 type GetTodosResponse struct {
-	ID        string `json:"id"`
-	UserID    string `json:"user_id"`
-	Title     string `json:"title"`
-	Content   string `json:"content"`
-	Completed int    `json:"completed"`
+	ID         string `json:"id"`
+	Title      string `json:"title"`
+	Content    string `json:"content"`
+	IsComplete bool   `json:"isComplete"`
 }
 
 func NewGetTodosController(gth *query.GetTodosHandler) *GetTodosController {
@@ -43,11 +42,10 @@ func toResponse(todos []*todo.Todo) []GetTodosResponse {
 	var res []GetTodosResponse
 	for _, t := range todos {
 		res = append(res, GetTodosResponse{
-			ID:        t.Ulid(),
-			UserID:    t.UserId(),
-			Title:     t.Title(),
-			Content:   t.Content(),
-			Completed: t.Completed(),
+			ID:         t.Id(),
+			Title:      t.Title(),
+			Content:    t.Content(),
+			IsComplete: t.IsComplete(),
 		})
 	}
 	return res

@@ -65,19 +65,19 @@ func (mr *MockIUserRepositoryMockRecorder) FetchByEmail(arg0, arg1 interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchByEmail", reflect.TypeOf((*MockIUserRepository)(nil).FetchByEmail), arg0, arg1)
 }
 
-// FetchByUlid mocks base method.
-func (m *MockIUserRepository) FetchByUlid(arg0 context.Context, arg1 string) (*user.User, error) {
+// FetchById mocks base method.
+func (m *MockIUserRepository) FetchById(arg0 context.Context, arg1 string) (*user.User, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchByUlid", arg0, arg1)
+	ret := m.ctrl.Call(m, "FetchById", arg0, arg1)
 	ret0, _ := ret[0].(*user.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FetchByUlid indicates an expected call of FetchByUlid.
-func (mr *MockIUserRepositoryMockRecorder) FetchByUlid(arg0, arg1 interface{}) *gomock.Call {
+// FetchById indicates an expected call of FetchById.
+func (mr *MockIUserRepositoryMockRecorder) FetchById(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchByUlid", reflect.TypeOf((*MockIUserRepository)(nil).FetchByUlid), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchById", reflect.TypeOf((*MockIUserRepository)(nil).FetchById), arg0, arg1)
 }
 
 // Save mocks base method.

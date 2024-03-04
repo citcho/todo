@@ -1,16 +1,16 @@
 package user_test
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/google/go-cmp/cmp"
 	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 	"github.com/hexisa_go_nal_todo/internal/user/domain/user/mock"
 )
 
 func TestNewUser(t *testing.T) {
-	u := user.NewUserFixture(
+	want := user.NewUserFixture(
 		"01HPCHEC5HJ37MC7D04PRCTJWK",
 		"test",
 		"test@example.com",
@@ -26,7 +26,7 @@ func TestNewUser(t *testing.T) {
 		AnyTimes()
 
 	type args struct {
-		ulid     string
+		id       string
 		name     string
 		email    string
 		password string
@@ -40,18 +40,18 @@ func TestNewUser(t *testing.T) {
 		{
 			name: "正常系",
 			args: args{
-				ulid:     "01HPCHEC5HJ37MC7D04PRCTJWK",
+				id:       "01HPCHEC5HJ37MC7D04PRCTJWK",
 				name:     "test",
 				email:    "test@example.com",
 				password: "Secretp@ssw0rd",
 			},
-			want:    u,
+			want:    want,
 			wantErr: false,
 		},
 		{
 			name: "準正常系:10文字以上の名前で作成できない",
 			args: args{
-				ulid:     "01HPCHEC5HJ37MC7D04PRCTJWK",
+				id:       "01HPCHEC5HJ37MC7D04PRCTJWK",
 				name:     "invalidname",
 				email:    "test@example.com",
 				password: "Secretp@ssw0rd",
@@ -62,7 +62,7 @@ func TestNewUser(t *testing.T) {
 		{
 			name: "準正常系:不正なメールアドレスで作成できない",
 			args: args{
-				ulid:     "01HPCHEC5HJ37MC7D04PRCTJWK",
+				id:       "01HPCHEC5HJ37MC7D04PRCTJWK",
 				name:     "test",
 				email:    "invalidemail",
 				password: "Secretp@ssw0rd",
@@ -73,7 +73,7 @@ func TestNewUser(t *testing.T) {
 		{
 			name: "準正常系:不正なパスワードで作成できない",
 			args: args{
-				ulid:     "01HPCHEC5HJ37MC7D04PRCTJWK",
+				id:       "01HPCHEC5HJ37MC7D04PRCTJWK",
 				name:     "test",
 				email:    "test@example.com",
 				password: "invalidpassword",
@@ -85,13 +85,14 @@ func TestNewUser(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := user.NewUser(tt.args.ulid, tt.args.name, tt.args.email, tt.args.password, mpe)
+			got, err := user.NewUser(tt.args.id, tt.args.name, tt.args.email, tt.args.password, mpe)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewUser() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewUser() = %v, want %v", got, tt.want)
+			opt := cmp.AllowUnexported(user.User{})
+			if d := cmp.Diff(got, tt.want, opt); len(d) != 0 {
+				t.Errorf("differs: (-got +want)\n%s", d)
 			}
 		})
 	}

@@ -1,8 +1,8 @@
 package user
 
-func NewUserFixture(ulid string, name string, email string, password string) *User {
+func NewUserFixture(id string, name string, email string, password string) *User {
 	return &User{
-		ulid:     ulid,
+		id:       id,
 		name:     name,
 		email:    email,
 		password: password,

@@ -50,22 +50,22 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 
 	storeHandler := todo_command.NewStoreHandler(todoRepository)
 	storeController := todo_presentation.NewStoreController(storeHandler)
-	mux.Handle("POST /todos", with(storeController, jwtMiddleware(jwter)))
+	mux.Handle("POST /todos", with(storeController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
 	completeHandler := todo_command.NewCompleteHandler(todoRepository)
 	completeController := todo_presentation.NewCompleteController(completeHandler)
-	mux.Handle("PATCH /todos/{id}/complete", with(completeController, jwtMiddleware(jwter)))
+	mux.Handle("PATCH /todos/{id}/complete", with(completeController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
 	getTodosHandler := todo_query.NewGetTodosHandler(todoRepository)
 	getTodosController := todo_presentation.NewGetTodosController(getTodosHandler)
-	mux.Handle("GET /todos", with(getTodosController, jwtMiddleware(jwter)))
+	mux.Handle("GET /todos", with(getTodosController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
 	return mux, cleanup, nil
 }
 
 func preflight(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8000")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.WriteHeader(http.StatusOK)

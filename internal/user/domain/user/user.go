@@ -12,14 +12,14 @@ type PasswordEncrypter interface {
 }
 
 type User struct {
-	ulid     string
+	id       string
 	name     string
 	email    string
 	password string
 }
 
 func NewUser(
-	ulid string,
+	id string,
 	name string,
 	email string,
 	password string,
@@ -36,7 +36,7 @@ func NewUser(
 	}
 
 	u := &User{
-		ulid:     ulid,
+		id:       id,
 		name:     name,
 		email:    email,
 		password: encrypter.Encrypt(password),
@@ -46,13 +46,13 @@ func NewUser(
 }
 
 func ReConstructFromRepository(
-	ulid string,
+	id string,
 	name string,
 	email string,
 	password string,
 ) *User {
 	u := &User{
-		ulid:     ulid,
+		id:       id,
 		name:     name,
 		email:    email,
 		password: password,
@@ -61,8 +61,8 @@ func ReConstructFromRepository(
 	return u
 }
 
-func (r User) Ulid() string {
-	return r.ulid
+func (r User) Id() string {
+	return r.id
 }
 
 func (r User) Name() string {

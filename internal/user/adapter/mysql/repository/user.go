@@ -36,7 +36,7 @@ func (ur *UserRepository) Exists(ctx context.Context, u *user.User) (bool, error
 
 func (ur *UserRepository) Save(ctx context.Context, u *user.User) error {
 	user := dao.User{
-		Ulid:      u.Ulid(),
+		Id:        u.Id(),
 		Name:      u.Name(),
 		Email:     u.Email(),
 		Password:  u.Password(),
@@ -71,7 +71,7 @@ func (ur *UserRepository) FetchByEmail(ctx context.Context, email string) (*user
 	}
 
 	domainUser := user.ReConstructFromRepository(
-		u.Ulid,
+		u.Id,
 		u.Name,
 		u.Email,
 		u.Password,
@@ -80,18 +80,18 @@ func (ur *UserRepository) FetchByEmail(ctx context.Context, email string) (*user
 	return domainUser, nil
 }
 
-func (ur *UserRepository) FetchByUlid(ctx context.Context, ulid string) (*user.User, error) {
+func (ur *UserRepository) FetchById(ctx context.Context, id string) (*user.User, error) {
 	var u dao.User
 	err := ur.db.NewSelect().
 		Model(&u).
-		Where("ulid = ?", ulid).
+		Where("id = ?", id).
 		Scan(ctx)
 	if err != nil {
 		return &user.User{}, err
 	}
 
 	domainUser := user.ReConstructFromRepository(
-		u.Ulid,
+		u.Id,
 		u.Name,
 		u.Email,
 		u.Password,
