@@ -12,24 +12,24 @@ type TokenGenerator interface {
 	GenerateToken(ctx context.Context, u *user.User) ([]byte, error)
 }
 
-type LoginCommand struct {
+type SignInCommand struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-type LoginHandler struct {
+type SignInHandler struct {
 	ur user.IUserRepository
 	tg TokenGenerator
 }
 
-func NewLoginHandler(ur user.IUserRepository, tg TokenGenerator) *LoginHandler {
-	return &LoginHandler{
+func NewSignInHandler(ur user.IUserRepository, tg TokenGenerator) *SignInHandler {
+	return &SignInHandler{
 		ur: ur,
 		tg: tg,
 	}
 }
 
-func (lh *LoginHandler) Handle(ctx context.Context, cmd LoginCommand) (string, error) {
+func (lh *SignInHandler) Handle(ctx context.Context, cmd SignInCommand) (string, error) {
 	u, err := lh.ur.FetchByEmail(ctx, cmd.Email)
 	if err != nil {
 		return "", err

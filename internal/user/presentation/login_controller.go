@@ -8,16 +8,16 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/user/app/command"
 )
 
-type LoginController struct {
-	lh *command.LoginHandler
+type SignInController struct {
+	lh *command.SignInHandler
 }
 
-func NewLoginController(s *command.LoginHandler) *LoginController {
-	return &LoginController{s}
+func NewSignInController(s *command.SignInHandler) *SignInController {
+	return &SignInController{s}
 }
 
-func (lc *LoginController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	var cmd command.LoginCommand
+func (lc *SignInController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	var cmd command.SignInCommand
 
 	dec := json.NewDecoder(r.Body)
 	if err := dec.Decode(&cmd); err != nil {

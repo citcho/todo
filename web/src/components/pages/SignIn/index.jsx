@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router-dom'
-import { useUserInfoMutators } from '@/stores/userInfoState'
+import { useUserMutators } from '@/stores/userState'
 import { useState, useCallback } from 'react'
 
-import { loginSchema } from '@/schemas/auth'
+import { signSchema } from '@/schemas/auth'
 
 import style from './index.module.css'
 
-export const Login = () => {
+export const SignIn = () => {
   const navigate = useNavigate()
-  const { login } = useUserInfoMutators()
+  const { signIn } = useUserMutators()
 
-  const [loginInfo, setLoginInfo] = useState({
+  const [sign, setSign] = useState({
     email: '',
     password: '',
   })
@@ -22,14 +22,14 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const { success, error } = loginSchema.safeParse(loginInfo)
+    const { success, error } = signSchema.safeParse(sign)
     if (error) {
       setErrors(error.flatten().fieldErrors)
       return
     }
     if (success) {
       setErrors({ email: [], password: [] })
-      login(loginInfo.email, loginInfo.password).then(() => {
+      signIn(sign.email, sign.password).then(() => {
         navigate('/', { replace: true })
       })
     }
@@ -37,7 +37,7 @@ export const Login = () => {
 
   return (
     <div className='wrapper'>
-      <div className={style['login-card']}>
+      <div className={style['signin-card']}>
         <h2 className={style['title']}>Sign in to your account</h2>
         <form onSubmit={handleSubmit} className={style['form']}>
           <div className={style['entry']}>
@@ -49,9 +49,8 @@ export const Login = () => {
               id='email'
               className={style['input']}
               onChange={useCallback(
-                (event) =>
-                  setLoginInfo({ ...loginInfo, email: event.target.value }),
-                [loginInfo]
+                (event) => setSign({ ...sign, email: event.target.value }),
+                [sign]
               )}
             />
             {errors.email[0] && <p>{errors.email[0]}</p>}
@@ -65,9 +64,8 @@ export const Login = () => {
               id='password'
               className={style['input']}
               onChange={useCallback(
-                (event) =>
-                  setLoginInfo({ ...loginInfo, password: event.target.value }),
-                [loginInfo]
+                (event) => setSign({ ...sign, password: event.target.value }),
+                [sign]
               )}
             />
             {errors.password[0] && <p>{errors.password[0]}</p>}

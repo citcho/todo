@@ -2,71 +2,51 @@ import { redirect } from 'react-router-dom'
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { axios } from '@/libs/axiosConfig'
-
 import { useNotification } from '@/hooks/useNotification'
 
-const userInfoState = atom({
-  key: 'userInfoState',
+const userState = atom({
+  key: 'userState',
   default: {
     name: '',
     email: '',
   },
 })
 
-const isLoadingState = atom({
-  key: 'isLoadingState',
-  default: false,
-})
+export const useUserState = () => {
+  const user = useRecoilValue(userState)
 
-/**
- * ユーザー情報とローディングフラグを返す
- * @returns {object} userInfo, isLoading
- * @returns {object} userInfo ユーザー情報
- * @returns {boolean} isLoading ローディングフラグ
- */
-export const useUserInfoState = () => {
-  const userInfo = useRecoilValue(userInfoState)
-  const isLoading = useRecoilValue(isLoadingState)
-
-  return { userInfo, isLoading }
+  return { user }
 }
 
-export const useUserInfoMutators = () => {
+export const useUserMutators = () => {
   const { error } = useNotification()
-  const setUserInfo = useSetRecoilState(userInfoState)
-  const setIsLoading = useSetRecoilState(isLoadingState)
+  const setUser = useSetRecoilState(userState)
 
-  /**
-   * ログインチェック
-   * @param {string} redirectPath リダイレクト先のパス
-   * @param {string} currentPath 現在のパス
-   * @returns {Promise<Function | null>} リダイレクト関数 or null
-   */
-  const checkLogin = (redirectPath, currentPath) => {
+  const checkSignIn = (redirectPath, currentPath) => {
     return new Promise((resolve, reject) => {
       axios
         .get('/me')
         .then(({ data }) => {
           if (data.user) {
-            setUserInfo(data.user)
+            setUser(data.user)
             if (redirectPath) {
               resolve(redirect(redirectPath))
             } else {
               resolve(null)
             }
-          } else if (currentPath === '/login') {
+          } else if (currentPath === '/signin') {
             resolve(null)
           } else {
-            resolve(redirect('/login'))
+            resolve(redirect('/signin'))
           }
         })
         .catch((err) => {
           switch (err.status) {
             case 401:
-              if (currentPath === '/login') {
+              if (currentPath === '/signin') {
                 resolve(null)
               } else {
-                resolve(redirect('/login'))
+                resolve(redirect('/signin'))
               }
               break
             default:
@@ -84,22 +64,15 @@ export const useUserInfoMutators = () => {
     })
   }
 
-  /**
-   * ログイン処理
-   * @param {string} email メールアドレス
-   * @param {string} password パスワード
-   * @returns {Promise<void>} Promise
-   */
-  const login = (email, password) => {
+  const signIn = (email, password) => {
     return new Promise((resolve) => {
-      setIsLoading(true)
       axios
-        .post('/login', {
+        .post('/signin', {
           email,
           password,
         })
         .then(() => {
-          checkLogin()
+          checkSignIn()
             .then(() => {
               resolve()
             })
@@ -110,14 +83,11 @@ export const useUserInfoMutators = () => {
         .catch(() => {
           error('メールアドレスまたはパスワードが間違っています。')
         })
-        .finally(() => {
-          setIsLoading(false)
-        })
     })
   }
 
   return {
-    checkLogin,
-    login,
+    checkSignIn,
+    signIn,
   }
 }

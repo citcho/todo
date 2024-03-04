@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-export const loginSchema = z.object({
+export const signSchema = z.object({
   email: z
     .string()
     .email({ message: 'メールアドレスの形式が正しくありません' })
-    .nonempty({ message: 'メールアドレスを入力してください' }),
-  password: z.string().nonempty({ message: 'パスワードを入力してください' }),
+    .min(1, { message: 'メールアドレスを入力してください' }),
+  password: z.string().min(1, { message: 'パスワードを入力してください' }),
 })

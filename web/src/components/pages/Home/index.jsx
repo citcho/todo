@@ -5,7 +5,7 @@ export const Home = () => {
   return (
     <HeaderWithSidebar>
       <p>HOME画面</p>
-      <NavLink to='/login'>ログイン</NavLink>
+      <NavLink to='/signin'>ログイン</NavLink>
     </HeaderWithSidebar>
   )
 }

@@ -38,8 +38,8 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	signupHandler := user_command.NewSignupHandler(userRepository)
 	mux.Handle("POST /signup", user_presentation.NewSignupController(signupHandler))
 
-	loginHandler := user_command.NewLoginHandler(userRepository, jwter)
-	mux.Handle("POST /login", with(user_presentation.NewLoginController(loginHandler), corsMiddleware(cfg.Server)))
+	signInHandler := user_command.NewSignInHandler(userRepository, jwter)
+	mux.Handle("POST /signin", with(user_presentation.NewSignInController(signInHandler), corsMiddleware(cfg.Server)))
 
 	getCurrentUserHandler := user_query.NewGetCurrentUserHandler(userRepository)
 	getCurrentUserController := user_presentation.NewGetCurrentUserController(getCurrentUserHandler)
