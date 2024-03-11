@@ -19,7 +19,7 @@ export const useUserState = () => {
 }
 
 export const useUserMutators = () => {
-  const { error } = useNotification()
+  const { success, error } = useNotification()
   const setUser = useSetRecoilState(userState)
 
   const checkSignIn = (redirectPath, currentPath) => {
@@ -86,8 +86,27 @@ export const useUserMutators = () => {
     })
   }
 
+  const signUp = (name, email, password) => {
+    return new Promise((resolve) => {
+      axios
+        .post('/signup', {
+          name,
+          email,
+          password,
+        })
+        .then(() => {
+          success('ユーザー登録が完了しました。')
+          resolve()
+        })
+        .catch(({ data }) => {
+          error(data.message)
+        })
+    })
+  }
+
   return {
     checkSignIn,
+    signUp,
     signIn,
   }
 }

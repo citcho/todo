@@ -25,6 +25,9 @@ func NewUser(
 	password string,
 	encrypter PasswordEncrypter,
 ) (*User, error) {
+	if len(name) == 0 {
+		return &User{}, errors.New("名前を入力してください。")
+	}
 	if utf8.RuneCountInString(name) > 9 {
 		return &User{}, errors.New("名前は10文字未満で入力してください。")
 	}

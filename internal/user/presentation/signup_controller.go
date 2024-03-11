@@ -25,7 +25,10 @@ func (s *SignupController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := s.sh.Handle(r.Context(), cmd); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		rsp := struct {
+			Message string `json:"message"`
+		}{Message: err.Error()}
+		RespondJSON(r.Context(), w, rsp, http.StatusBadRequest)
 		return
 	}
 
