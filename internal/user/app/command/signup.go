@@ -2,6 +2,7 @@ package command
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/hexisa_go_nal_todo/internal/pkg/encrypt"
@@ -42,8 +43,11 @@ func (sh *SignupHandler) Handle(ctx context.Context, cmd SignupCommand) error {
 	}
 
 	exists, err := sh.us.Exists(ctx, u)
-	if exists || err != nil {
+	if err != nil {
 		return fmt.Errorf("ユーザーの作成に失敗しました。: %w", err)
+	}
+	if exists {
+		return fmt.Errorf("ユーザーの作成に失敗しました。: %w", errors.New("既に登録されているメールアドレスです。"))
 	}
 
 	if err := sh.ur.Save(ctx, u); err != nil {
