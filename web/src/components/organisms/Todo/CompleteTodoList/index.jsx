@@ -29,12 +29,18 @@ export const CompleteTodoList = memo(() => {
 
   return (
     <>
-      <TodoTable rows={memoizedTodoRows} onRowClick={handleRowClick} />
-      <TodoModal
-        modalIsOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        todo={todo}
-      />
+      {completeTodos.length ? (
+        <>
+          <TodoTable rows={memoizedTodoRows} onRowClick={handleRowClick} />
+          <TodoModal
+            modalIsOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            todo={todo}
+          />
+        </>
+      ) : (
+        <p>Todoはありません</p>
+      )}
     </>
   )
 })

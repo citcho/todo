@@ -50,7 +50,9 @@ export const useTodoMutators = () => {
     axios
       .get('/todos')
       .then(({ data }) => {
-        setTodos(data.todos)
+        data.todos
+          ? setTodos(data.todos)
+          : setTodos([])
       })
       .catch(() => {
         setIsError(true)
