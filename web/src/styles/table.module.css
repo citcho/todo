@@ -9,6 +9,10 @@
   background-color: var(--color-bg-white);
 }
 
+.table tbody > tr {
+  cursor: pointer;
+}
+
 .table thead > tr > th {
   padding: 16px 24px;
   font-weight: var(--font-weight-bold);

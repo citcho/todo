@@ -26,7 +26,7 @@ export const TodoTable = memo(({ rows, onRowClick, onCompleteIconClick }) => {
         {rows.map((row) => (
           <tr key={row.id} onClick={() => onRowClick(row.id, row.content)}>
             <td>{row.title}</td>
-            <td>{row.content}</td>
+            <td>{row.roundedContent}</td>
             <td className={styles['align-left']}>
               {!row.isComplete && (
                 <button

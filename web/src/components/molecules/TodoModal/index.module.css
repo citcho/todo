@@ -49,5 +49,6 @@
 .modal-heading {
   padding: 20px;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 300;
+  color: var(--color-text-main);
 }
