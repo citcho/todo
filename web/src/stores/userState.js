@@ -104,9 +104,28 @@ export const useUserMutators = () => {
     })
   }
 
+  const signOut = () => {
+    return new Promise((resolve) => {
+      axios
+        .post('/signout')
+        .then(() => {
+          setUser({
+            name: '',
+            email: '',
+          })
+          success('サインアウトしました。')
+          resolve()
+        })
+        .catch(() => {
+          error('エラーが発生しました。時間をおいて再度お試しください。')
+        })
+    })
+  }
+
   return {
     checkSignIn,
     signUp,
     signIn,
+    signOut,
   }
 }

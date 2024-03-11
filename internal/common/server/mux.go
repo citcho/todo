@@ -41,6 +41,8 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	signInHandler := user_command.NewSignInHandler(userRepository, jwter)
 	mux.Handle("POST /signin", with(user_presentation.NewSignInController(signInHandler), corsMiddleware(cfg.Server)))
 
+	mux.Handle("POST /signout", with(user_presentation.NewSignOutController(), jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
+
 	getCurrentUserHandler := user_query.NewGetCurrentUserHandler(userRepository)
 	getCurrentUserController := user_presentation.NewGetCurrentUserController(getCurrentUserHandler)
 
