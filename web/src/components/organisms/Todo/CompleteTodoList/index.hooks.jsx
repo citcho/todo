@@ -19,6 +19,7 @@ export const useTodoList = () => {
         id: todo.id,
         title: sanitizedTitle,
         content: roundedContent,
+        isComplete: todo.isComplete,
       }
     })
 

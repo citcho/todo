@@ -28,15 +28,17 @@ export const TodoTable = memo(({ rows, onRowClick, onCompleteIconClick }) => {
             <td>{row.title}</td>
             <td>{row.content}</td>
             <td className={styles['align-left']}>
-              <button
-                className={styles['complete-button']}
-                onClick={(event) => {
-                  event.stopPropagation()
-                  onCompleteIconClick(row.id)
-                }}
-              >
-                <GoCheckCircleFill />
-              </button>
+              {!row.isComplete && (
+                <button
+                  className={styles['complete-button']}
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    onCompleteIconClick(row.id)
+                  }}
+                >
+                  <GoCheckCircleFill />
+                </button>
+              )}
             </td>
           </tr>
         ))}
