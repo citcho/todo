@@ -1,6 +1,26 @@
 version: "3.9"
 
 services:
+  web:
+    image: nginx:1.25-bookworm
+    platform: linux/amd64
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./_tools/nginx/conf.d:/etc/nginx/conf.d
+      - ./_tools/nginx/certs:/etc/nginx/certs
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    depends_on:
+      - api
+
   api:
     build:
       context: .
