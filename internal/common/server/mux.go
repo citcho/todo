@@ -26,7 +26,13 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("OPTIONS /{path...}", preflight)
+	mux.HandleFunc("OPTIONS /{path...}", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", cfg.Server.ClientUrl)
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.WriteHeader(http.StatusOK)
+	})
 
 	jwter, err := auth.NewJWTer(clock.RealClocker{})
 	if err != nil {
@@ -63,12 +69,4 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	mux.Handle("GET /todos", with(getTodosController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
 	return mux, cleanup, nil
-}
-
-func preflight(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8000")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.WriteHeader(http.StatusOK)
 }

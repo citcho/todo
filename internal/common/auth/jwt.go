@@ -56,7 +56,7 @@ func parse(rawKey []byte) (jwk.Key, error) {
 func (j *JWTer) GenerateToken(ctx context.Context, u *user.User) ([]byte, error) {
 	token, err := jwt.NewBuilder().
 		JwtID(uuid.New().String()).
-		Issuer(`github.com/citcho/go-gizlog`).
+		Issuer(`github.com/citcho/hexisa_go_nal_todo`).
 		Subject("access_token").
 		IssuedAt(j.Clocker.Now()).
 		Expiration(j.Clocker.Now().Add(30*time.Minute)).

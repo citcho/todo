@@ -29,10 +29,10 @@ services:
     working_dir: /app
     platform: linux/amd64
     environment:
-      CLIENT_URL: http://localhost:8000
-      TODO_HOST: localhost
+      CLIENT_URL: https://dev-todo.citcho.com:8000
+      TODO_HOST: api.dev-todo.citcho.com
       TODO_ENV: dev
-      TODO_PORT: 8080
+      TODO_PORT: 80
       DB_NAME: todo_db
       DB_USER: citcho
       DB_PASS: Secretp@ssw0rd
@@ -40,8 +40,6 @@ services:
       DB_HOST: db
       TZ: "Asia/Tokyo"
       BUNDEBUG: 2
-    ports:
-      - 8888:8080
     volumes:
       - .:/app
     depends_on:

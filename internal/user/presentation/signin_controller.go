@@ -9,7 +9,7 @@ import (
 )
 
 type SignInController struct {
-	lh *command.SignInHandler
+	sh *command.SignInHandler
 }
 
 func NewSignInController(s *command.SignInHandler) *SignInController {
@@ -25,20 +25,19 @@ func (lc *SignInController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jwt, err := lc.lh.Handle(r.Context(), cmd)
+	jwt, err := lc.sh.Handle(r.Context(), cmd)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	// TODO: nginxでSSL設定後にSecureを有効にする
 	cookie := http.Cookie{
-		Name:    "token",
-		Value:   jwt,
-		Path:    "/",
-		Domain:  "localhost",
-		Expires: time.Now().Add(24 * time.Hour),
-		// Secure:   true,
+		Name:     "token",
+		Value:    jwt,
+		Path:     "/",
+		Domain:   "dev-todo.citcho.com",
+		Expires:  time.Now().Add(24 * time.Hour),
+		Secure:   true,
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
