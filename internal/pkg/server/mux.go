@@ -5,10 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/common/auth"
-	"github.com/hexisa_go_nal_todo/internal/common/clock"
-	"github.com/hexisa_go_nal_todo/internal/common/config"
-	"github.com/hexisa_go_nal_todo/internal/common/database"
+	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
+	"github.com/hexisa_go_nal_todo/internal/pkg/clock"
+	"github.com/hexisa_go_nal_todo/internal/pkg/config"
 	todo_repository "github.com/hexisa_go_nal_todo/internal/todo/adapter/mysql/repository"
 	todo_command "github.com/hexisa_go_nal_todo/internal/todo/app/command"
 	todo_query "github.com/hexisa_go_nal_todo/internal/todo/app/query"
@@ -19,11 +18,7 @@ import (
 	user_presentation "github.com/hexisa_go_nal_todo/internal/user/presentation"
 )
 
-func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), error) {
-	db, cleanup, err := database.NewDB(ctx, cfg.DB)
-	if err != nil {
-		return nil, cleanup, err
-	}
+func NewMux(ctx context.Context, cfg *config.Config) *http.ServeMux {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("OPTIONS /{path...}", func(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +34,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 		log.Fatalf("%s", err.Error())
 	}
 
-	userRepository := user_repository.NewUserRepository(db)
+	userRepository := user_repository.NewUserRepository()
 
 	signupHandler := user_command.NewSignupHandler(userRepository)
 	mux.Handle("POST /signup", with(user_presentation.NewSignupController(signupHandler), corsMiddleware(cfg.Server)))
@@ -54,7 +49,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 
 	mux.Handle("GET /me", with(getCurrentUserController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
-	todoRepository := todo_repository.NewTodoRepository(db)
+	todoRepository := todo_repository.NewTodoRepository()
 
 	storeHandler := todo_command.NewStoreHandler(todoRepository)
 	storeController := todo_presentation.NewStoreController(storeHandler)
@@ -68,5 +63,5 @@ func NewMux(ctx context.Context, cfg *config.Config) (*http.ServeMux, func(), er
 	getTodosController := todo_presentation.NewGetTodosController(getTodosHandler)
 	mux.Handle("GET /todos", with(getTodosController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
-	return mux, cleanup, nil
+	return mux
 }

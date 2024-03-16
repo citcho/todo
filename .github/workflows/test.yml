@@ -41,10 +41,10 @@ jobs:
 
       - name: Create Private Key File
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" > ./internal/common/auth/cert/secret.pem
+          echo "${{ secrets.PRIVATE_KEY }}" > ./internal/pkg/auth/cert/secret.pem
       - name: Create Public Key File
         run: |
-          echo "${{ secrets.PUBLIC_KEY }}" > ./internal/common/auth/cert/public.pem
+          echo "${{ secrets.PUBLIC_KEY }}" > ./internal/pkg/auth/cert/public.pem
 
     #   - run: |
     #       go install github.com/k0kubun/sqldef/cmd/mysqldef@latest

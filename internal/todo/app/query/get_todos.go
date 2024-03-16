@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hexisa_go_nal_todo/internal/common/auth"
+	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
 	"github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
 )
 

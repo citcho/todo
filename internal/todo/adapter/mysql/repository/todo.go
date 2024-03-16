@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/hexisa_go_nal_todo/internal/pkg/database"
 	"github.com/hexisa_go_nal_todo/internal/todo/adapter/mysql/dao"
 	"github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
 	"github.com/uptrace/bun"
@@ -16,9 +17,9 @@ type TodoRepository struct {
 	db *bun.DB
 }
 
-func NewTodoRepository(db *bun.DB) *TodoRepository {
+func NewTodoRepository() *TodoRepository {
 	return &TodoRepository{
-		db: db,
+		db: database.GetDB(),
 	}
 }
 

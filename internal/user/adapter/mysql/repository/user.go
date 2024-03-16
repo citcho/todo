@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/hexisa_go_nal_todo/internal/pkg/database"
 	"github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/dao"
 	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 	"github.com/uptrace/bun"
@@ -16,9 +17,9 @@ type UserRepository struct {
 	db *bun.DB
 }
 
-func NewUserRepository(db *bun.DB) *UserRepository {
+func NewUserRepository() *UserRepository {
 	return &UserRepository{
-		db: db,
+		db: database.GetDB(),
 	}
 }
 

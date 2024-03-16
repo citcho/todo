@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/hexisa_go_nal_todo/internal/common/clock"
+	"github.com/hexisa_go_nal_todo/internal/pkg/clock"
 	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwk"

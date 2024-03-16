@@ -3,8 +3,8 @@ package server
 import (
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/common/auth"
-	"github.com/hexisa_go_nal_todo/internal/common/config"
+	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
+	"github.com/hexisa_go_nal_todo/internal/pkg/config"
 )
 
 type Middleware interface {
