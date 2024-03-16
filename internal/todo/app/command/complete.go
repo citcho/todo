@@ -11,18 +11,16 @@ type CompleteCommand struct {
 	Id string
 }
 
-type CompleteHandler struct {
+type Complete struct {
 	tr todo.ITodoRepository
 }
 
-func NewCompleteHandler(tr todo.ITodoRepository) *CompleteHandler {
-	return &CompleteHandler{
-		tr: tr,
-	}
+func NewComplete(tr todo.ITodoRepository) *Complete {
+	return &Complete{tr}
 }
 
-func (sh *CompleteHandler) Handle(ctx context.Context, cmd CompleteCommand) error {
-	t, err := sh.tr.FindById(ctx, cmd.Id)
+func (c *Complete) Invoke(ctx context.Context, cmd CompleteCommand) error {
+	t, err := c.tr.FindById(ctx, cmd.Id)
 	if err != nil {
 		return fmt.Errorf("Todoの完了に失敗しました。: %w", err)
 	}
@@ -31,7 +29,7 @@ func (sh *CompleteHandler) Handle(ctx context.Context, cmd CompleteCommand) erro
 		return fmt.Errorf("Todoの完了に失敗しました。: %w", err)
 	}
 
-	if err = sh.tr.Update(ctx, t); err != nil {
+	if err = c.tr.Update(ctx, t); err != nil {
 		return fmt.Errorf("Todoの完了に失敗しました。: %w", err)
 	}
 

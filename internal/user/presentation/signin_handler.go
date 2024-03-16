@@ -8,15 +8,15 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/user/app/command"
 )
 
-type SignInController struct {
-	sh *command.SignInHandler
+type SignInHandler struct {
+	si *command.SignIn
 }
 
-func NewSignInController(s *command.SignInHandler) *SignInController {
-	return &SignInController{s}
+func NewSignInHandler(si *command.SignIn) *SignInHandler {
+	return &SignInHandler{si}
 }
 
-func (lc *SignInController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (sih *SignInHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var cmd command.SignInCommand
 
 	dec := json.NewDecoder(r.Body)
@@ -25,7 +25,7 @@ func (lc *SignInController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jwt, err := lc.sh.Handle(r.Context(), cmd)
+	jwt, err := sih.si.Invoke(r.Context(), cmd)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

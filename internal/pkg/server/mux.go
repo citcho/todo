@@ -8,13 +8,7 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
 	"github.com/hexisa_go_nal_todo/internal/pkg/clock"
 	"github.com/hexisa_go_nal_todo/internal/pkg/config"
-	todo_repository "github.com/hexisa_go_nal_todo/internal/todo/adapter/mysql/repository"
-	todo_command "github.com/hexisa_go_nal_todo/internal/todo/app/command"
-	todo_query "github.com/hexisa_go_nal_todo/internal/todo/app/query"
 	todo_presentation "github.com/hexisa_go_nal_todo/internal/todo/presentation"
-	user_repository "github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/repository"
-	user_command "github.com/hexisa_go_nal_todo/internal/user/app/command"
-	user_query "github.com/hexisa_go_nal_todo/internal/user/app/query"
 	user_presentation "github.com/hexisa_go_nal_todo/internal/user/presentation"
 )
 
@@ -34,34 +28,16 @@ func NewMux(ctx context.Context, cfg *config.Config) *http.ServeMux {
 		log.Fatalf("%s", err.Error())
 	}
 
-	userRepository := user_repository.NewUserRepository()
+	userHandlers := user_presentation.NewUserHandlers()
+	todoHandlers := todo_presentation.NewTodoHandlers()
 
-	signupHandler := user_command.NewSignupHandler(userRepository)
-	mux.Handle("POST /signup", with(user_presentation.NewSignupController(signupHandler), corsMiddleware(cfg.Server)))
-
-	signInHandler := user_command.NewSignInHandler(userRepository, jwter)
-	mux.Handle("POST /signin", with(user_presentation.NewSignInController(signInHandler), corsMiddleware(cfg.Server)))
-
-	mux.Handle("POST /signout", with(user_presentation.NewSignOutController(), jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
-
-	getCurrentUserHandler := user_query.NewGetCurrentUserHandler(userRepository)
-	getCurrentUserController := user_presentation.NewGetCurrentUserController(getCurrentUserHandler)
-
-	mux.Handle("GET /me", with(getCurrentUserController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
-
-	todoRepository := todo_repository.NewTodoRepository()
-
-	storeHandler := todo_command.NewStoreHandler(todoRepository)
-	storeController := todo_presentation.NewStoreController(storeHandler)
-	mux.Handle("POST /todos", with(storeController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
-
-	completeHandler := todo_command.NewCompleteHandler(todoRepository)
-	completeController := todo_presentation.NewCompleteController(completeHandler)
-	mux.Handle("PATCH /todos/{id}/complete", with(completeController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
-
-	getTodosHandler := todo_query.NewGetTodosHandler(todoRepository)
-	getTodosController := todo_presentation.NewGetTodosController(getTodosHandler)
-	mux.Handle("GET /todos", with(getTodosController, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
+	mux.Handle("POST /signup", with(userHandlers.SignUpHandler, corsMiddleware(cfg.Server)))
+	mux.Handle("POST /signin", with(userHandlers.SignInHandler, corsMiddleware(cfg.Server)))
+	mux.Handle("POST /signout", with(userHandlers.SignOutHandler, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
+	mux.Handle("GET /me", with(userHandlers.GetCurrentUserHandler, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
+	mux.Handle("POST /todos", with(todoHandlers.StoreHandler, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
+	mux.Handle("PATCH /todos/{id}/complete", with(todoHandlers.CompleteHandler, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
+	mux.Handle("GET /todos", with(todoHandlers.GetTodosHandler, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))
 
 	return mux
 }

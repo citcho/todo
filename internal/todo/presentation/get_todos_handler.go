@@ -7,8 +7,8 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
 )
 
-type GetTodosController struct {
-	gth *query.GetTodosHandler
+type GetTodosHandler struct {
+	gt *query.GetTodos
 }
 
 type GetTodosResponse struct {
@@ -18,12 +18,12 @@ type GetTodosResponse struct {
 	IsComplete bool   `json:"isComplete"`
 }
 
-func NewGetTodosController(gth *query.GetTodosHandler) *GetTodosController {
-	return &GetTodosController{gth}
+func NewGetTodosHandler(gt *query.GetTodos) *GetTodosHandler {
+	return &GetTodosHandler{gt}
 }
 
-func (gtc *GetTodosController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	todos, err := gtc.gth.Handle(r.Context())
+func (gth *GetTodosHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	todos, err := gth.gt.Invoke(r.Context())
 	if err != nil {
 		RespondJSON(r.Context(), w, err, http.StatusBadRequest)
 		return

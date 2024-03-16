@@ -5,14 +5,14 @@ import (
 	"time"
 )
 
-type SignOutController struct {
+type SignOutHandler struct {
 }
 
-func NewSignOutController() SignOutController {
-	return SignOutController{}
+func NewSignOutHandler() *SignOutHandler {
+	return &SignOutHandler{}
 }
 
-func (sc SignOutController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (sc SignOutHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:    "token",
 		Value:   "",

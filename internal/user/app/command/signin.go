@@ -17,20 +17,20 @@ type SignInCommand struct {
 	Password string `json:"password"`
 }
 
-type SignInHandler struct {
+type SignIn struct {
 	ur user.IUserRepository
 	tg TokenGenerator
 }
 
-func NewSignInHandler(ur user.IUserRepository, tg TokenGenerator) *SignInHandler {
-	return &SignInHandler{
+func NewSignIn(ur user.IUserRepository, tg TokenGenerator) *SignIn {
+	return &SignIn{
 		ur: ur,
 		tg: tg,
 	}
 }
 
-func (lh *SignInHandler) Handle(ctx context.Context, cmd SignInCommand) (string, error) {
-	u, err := lh.ur.FetchByEmail(ctx, cmd.Email)
+func (si *SignIn) Invoke(ctx context.Context, cmd SignInCommand) (string, error) {
+	u, err := si.ur.FetchByEmail(ctx, cmd.Email)
 	if err != nil {
 		return "", err
 	}
@@ -39,7 +39,7 @@ func (lh *SignInHandler) Handle(ctx context.Context, cmd SignInCommand) (string,
 		return "", err
 	}
 
-	t, err := lh.tg.GenerateToken(ctx, u)
+	t, err := si.tg.GenerateToken(ctx, u)
 	if err != nil {
 		return "", fmt.Errorf("failed to generate JWT: %w", err)
 	}

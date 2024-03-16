@@ -10,25 +10,25 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 )
 
-type SignupCommand struct {
+type SignUpCommand struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-type SignupHandler struct {
+type SignUp struct {
 	ur user.IUserRepository
 	us *user.UserService
 }
 
-func NewSignupHandler(ur user.IUserRepository) *SignupHandler {
-	return &SignupHandler{
+func NewSignUp(ur user.IUserRepository) *SignUp {
+	return &SignUp{
 		ur: ur,
 		us: user.NewUserService(ur),
 	}
 }
 
-func (sh *SignupHandler) Handle(ctx context.Context, cmd SignupCommand) error {
+func (su *SignUp) Invoke(ctx context.Context, cmd SignUpCommand) error {
 	ulid := ulid.NewULID()
 
 	u, err := user.NewUser(
@@ -42,7 +42,7 @@ func (sh *SignupHandler) Handle(ctx context.Context, cmd SignupCommand) error {
 		return fmt.Errorf("ユーザーの作成に失敗しました。: %w", err)
 	}
 
-	exists, err := sh.us.Exists(ctx, u)
+	exists, err := su.us.Exists(ctx, u)
 	if err != nil {
 		return fmt.Errorf("ユーザーの作成に失敗しました。: %w", err)
 	}
@@ -50,7 +50,7 @@ func (sh *SignupHandler) Handle(ctx context.Context, cmd SignupCommand) error {
 		return fmt.Errorf("ユーザーの作成に失敗しました。: %w", errors.New("既に登録されているメールアドレスです。"))
 	}
 
-	if err := sh.ur.Save(ctx, u); err != nil {
+	if err := su.ur.Save(ctx, u); err != nil {
 		return fmt.Errorf("ユーザーの作成に失敗しました。: %w", err)
 	}
 

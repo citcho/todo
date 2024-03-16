@@ -14,17 +14,15 @@ type StoreCommand struct {
 	Content string `json:"content"`
 }
 
-type StoreHandler struct {
+type Store struct {
 	tr todo.ITodoRepository
 }
 
-func NewStoreHandler(tr todo.ITodoRepository) *StoreHandler {
-	return &StoreHandler{
-		tr: tr,
-	}
+func NewStore(tr todo.ITodoRepository) *Store {
+	return &Store{tr}
 }
 
-func (sh *StoreHandler) Handle(ctx context.Context, cmd StoreCommand) error {
+func (s *Store) Invoke(ctx context.Context, cmd StoreCommand) error {
 	userId, ok := auth.GetUserID(ctx)
 	if !ok {
 		return fmt.Errorf("Todoの作成に失敗しました。: %s", "ユーザーIDが取得できませんでした。")
@@ -40,7 +38,7 @@ func (sh *StoreHandler) Handle(ctx context.Context, cmd StoreCommand) error {
 		return fmt.Errorf("Todoの作成に失敗しました。: %w", err)
 	}
 
-	if err := sh.tr.Save(ctx, u); err != nil {
+	if err := s.tr.Save(ctx, u); err != nil {
 		return fmt.Errorf("Todoの作成に失敗しました。: %w", err)
 	}
 

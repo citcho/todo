@@ -7,16 +7,16 @@ import (
 	"github.com/hexisa_go_nal_todo/internal/user/app/command"
 )
 
-type SignupController struct {
-	sh *command.SignupHandler
+type SignUpHandler struct {
+	su *command.SignUp
 }
 
-func NewSignupController(s *command.SignupHandler) *SignupController {
-	return &SignupController{s}
+func NewSignUpHandler(su *command.SignUp) *SignUpHandler {
+	return &SignUpHandler{su}
 }
 
-func (s *SignupController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	var cmd command.SignupCommand
+func (suh *SignUpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	var cmd command.SignUpCommand
 
 	dec := json.NewDecoder(r.Body)
 	if err := dec.Decode(&cmd); err != nil {
@@ -24,7 +24,7 @@ func (s *SignupController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := s.sh.Handle(r.Context(), cmd); err != nil {
+	if err := suh.su.Invoke(r.Context(), cmd); err != nil {
 		rsp := struct {
 			Message string `json:"message"`
 		}{Message: err.Error()}
