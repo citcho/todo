@@ -1,0 +1,68 @@
+name: Document CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      mysql:
+        image: mysql:8
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 202
+          --health-timeout 10s
+          --health-retries 10
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: todo_db
+          MYSQL_USER: citcho
+          MYSQL_PASSWORD: Secretp@ssw0rd
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Execute migration
+        run: |
+          go install github.com/sqldef/sqldef/cmd/mysqldef@latest
+          mysqldef -u root -p Secretp@ssw0rd -h db -P 3306 todo_db < ./_tools/mysql/schema.sql
+
+      - name: Setup tbls
+        uses: k1low/setup-tbls@v1
+
+      - name: Generate database document with tbls
+        run: |
+          tbls doc -f
+
+      - name: Check for changes
+        run: |
+          git add -N .
+          echo "db_doc_generated=$(if git diff --quiet; then echo 'false'; else echo 'true'; fi)" >> $GITHUB_ENV
+
+      - name: Push database document
+        if: ${{ env.db_doc_generated == 'true' }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .
+          git commit -m "[ci skip] generate database document"
+          git push origin HEAD
