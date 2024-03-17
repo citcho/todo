@@ -1,4 +1,4 @@
-dsn: mysql://root:Secretp@ssw0rd@localhost:3306/todo_db
+dsn: mysql://citcho:Secretp@ssw0rd@localhost:3306/todo_db
 
 docPath: ./db
 
