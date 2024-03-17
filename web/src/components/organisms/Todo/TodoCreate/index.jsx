@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
 import { createTodoSchema } from '@/schemas/todo'
@@ -24,8 +25,6 @@ export const TodoCreate = ({ onSuccess }) => {
     (event) => {
       event.preventDefault()
       const { success, error } = createTodoSchema.safeParse(todo)
-      console.log('success', success)
-      console.log('error', error)
       if (error) {
         setErrors(error.flatten().fieldErrors)
         return
@@ -76,4 +75,9 @@ export const TodoCreate = ({ onSuccess }) => {
       </form>
     </div>
   )
+}
+
+TodoCreate.displayName = 'TodoCreate'
+TodoCreate.propTypes = {
+  onSuccess: PropTypes.func.isRequired,
 }

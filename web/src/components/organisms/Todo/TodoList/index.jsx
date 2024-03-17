@@ -55,3 +55,5 @@ export const TodoList = memo(() => {
     </>
   )
 })
+
+TodoList.displayName = 'TodoList'

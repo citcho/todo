@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { memo } from 'react'
 import { GoCheckCircleFill } from 'react-icons/go'
 import styles from './index.module.css'
@@ -46,3 +47,18 @@ export const TodoTable = memo(({ rows, onRowClick, onCompleteIconClick }) => {
     </table>
   )
 })
+
+TodoTable.displayName = 'TodoTable'
+TodoTable.propTypes = {
+  rows: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      roundedContent: PropTypes.string.isRequired,
+      isComplete: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
+  onRowClick: PropTypes.func.isRequired,
+  onCompleteIconClick: PropTypes.func,
+}
