@@ -27,7 +27,6 @@ export const Header = memo(() => {
         >
           Sign out
         </button>
-        <></>
       </div>
     </header>
   )
