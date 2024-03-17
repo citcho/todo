@@ -43,7 +43,7 @@ jobs:
       - name: Execute migration
         run: |
           go install github.com/sqldef/sqldef/cmd/mysqldef@latest
-          mysqldef -u root -p Secretp@ssw0rd -h db -P 3306 todo_db < ./_tools/mysql/schema.sql
+          mysqldef -u root -p Secretp@ssw0rd -P 3306 todo_db < ./_tools/mysql/schema.sql
 
       - name: Setup tbls
         uses: k1low/setup-tbls@v1
