@@ -1,6 +1,6 @@
 dsn: mysql://root:Secretp@ssw0rd@localhost:3306/todo_db
 
-docPath: docs/db
+docPath: ./db
 
 er:
   format: mermaid

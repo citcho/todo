@@ -51,6 +51,7 @@ jobs:
       - name: Generate database document with tbls
         run: |
           tbls doc -f
+        working-directory: ./docs
 
       - name: Check for changes
         run: |
