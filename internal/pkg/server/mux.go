@@ -13,15 +13,7 @@ import (
 )
 
 func NewMux(ctx context.Context, cfg *config.Config) *http.ServeMux {
-
 	mux := http.NewServeMux()
-	mux.HandleFunc("OPTIONS /{path...}", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", cfg.Server.ClientUrl)
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
-		w.Header().Set("Access-Control-Allow-Credentials", "true")
-		w.WriteHeader(http.StatusOK)
-	})
 
 	jwter, err := auth.NewJWTer(clock.RealClocker{})
 	if err != nil {
@@ -31,6 +23,13 @@ func NewMux(ctx context.Context, cfg *config.Config) *http.ServeMux {
 	userHandlers := user_presentation.NewUserHandlers()
 	todoHandlers := todo_presentation.NewTodoHandlers()
 
+	mux.HandleFunc("OPTIONS /{path...}", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", cfg.Server.ClientUrl)
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.WriteHeader(http.StatusOK)
+	})
 	mux.Handle("POST /signup", with(userHandlers.SignUpHandler, corsMiddleware(cfg.Server)))
 	mux.Handle("POST /signin", with(userHandlers.SignInHandler, corsMiddleware(cfg.Server)))
 	mux.Handle("POST /signout", with(userHandlers.SignOutHandler, jwtMiddleware(jwter), corsMiddleware(cfg.Server)))

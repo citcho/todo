@@ -21,14 +21,18 @@ func (sh *StoreHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	dec := json.NewDecoder(r.Body)
 	if err := dec.Decode(&cmd); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusInternalServerError)
 		return
 	}
 
 	cmd.Id = ulid.NewULID()
 
 	if err := sh.s.Invoke(r.Context(), cmd); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusBadRequest)
 		return
 	}
 

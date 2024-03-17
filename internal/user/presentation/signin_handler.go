@@ -21,13 +21,17 @@ func (sih *SignInHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	dec := json.NewDecoder(r.Body)
 	if err := dec.Decode(&cmd); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusInternalServerError)
 		return
 	}
 
 	jwt, err := sih.si.Invoke(r.Context(), cmd)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusBadRequest)
 		return
 	}
 

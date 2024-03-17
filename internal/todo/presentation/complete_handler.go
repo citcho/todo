@@ -20,7 +20,9 @@ func (ch *CompleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cmd.Id = r.PathValue("id")
 
 	if err := ch.c.Invoke(r.Context(), cmd); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusBadRequest)
 		return
 	}
 

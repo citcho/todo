@@ -20,15 +20,16 @@ func (suh *SignUpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	dec := json.NewDecoder(r.Body)
 	if err := dec.Decode(&cmd); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusInternalServerError)
 		return
 	}
 
 	if err := suh.su.Invoke(r.Context(), cmd); err != nil {
-		rsp := struct {
-			Message string `json:"message"`
-		}{Message: err.Error()}
-		RespondJSON(r.Context(), w, rsp, http.StatusBadRequest)
+		RespondJSON(r.Context(), w, ErrResponse{
+			Message: err.Error(),
+		}, http.StatusBadRequest)
 		return
 	}
 

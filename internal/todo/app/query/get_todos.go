@@ -9,7 +9,7 @@ import (
 )
 
 type GetTodosDto struct {
-	Todos []*todo.Todo `json:"todos"`
+	Todos []*todo.Todo
 }
 
 type GetTodos struct {
