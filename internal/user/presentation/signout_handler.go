@@ -12,14 +12,14 @@ func NewSignOutHandler() *SignOutHandler {
 	return &SignOutHandler{}
 }
 
-func (sc SignOutHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (soh SignOutHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
-		Name:    "token",
-		Value:   "",
-		Path:    "/",
-		Domain:  "localhost",
-		Expires: time.Now(),
-		// Secure:   true,
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		Domain:   "dev-todo.citcho.com",
+		Expires:  time.Now(),
+		Secure:   true,
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
