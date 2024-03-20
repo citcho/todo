@@ -17,18 +17,17 @@ type Config struct {
 }
 
 type DB struct {
-	Name string `env:"DB_NAME" default:"todo"`
-	User string `env:"DB_USER" default:"citcho"`
-	Pass string `env:"DB_PASS" default:"Secretp@ssw0rd"`
-	Port int    `env:"DB_PORT" default:"3306"`
-	Host string `env:"DB_HOST" default:"db"`
+	DBName string `env:"DB_NAME" default:"todo_db"`
+	DBUser string `env:"DB_USER" default:"citcho"`
+	DBPass string `env:"DB_PASS" default:"Secretp@ssw0rd"`
+	DBPort int    `env:"DB_PORT" default:"3306"`
+	DBHost string `env:"DB_HOST" default:"db"`
 }
 
 type Server struct {
-	ClientUrl string `env:"CLIENT_URL"`
-	TodoHost  string `env:"TODO_HOST"`
-	TodoEnv   string `env:"TODO_ENV"`
-	AppPort   int    `env:"TODO_PORT"`
+	ClientHost string `env:"CLIENT_HOST"`
+	ClientPort int    `env:"CLIENT_PORT"`
+	AppPort    int    `env:"TODO_PORT"`
 }
 
 func NewConfig() *Config {

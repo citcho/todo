@@ -31,11 +31,11 @@ func NewDB(ctx context.Context, cfg config.DB) func() {
 	once.Do(func() {
 		dsn := fmt.Sprintf(
 			"%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-			cfg.User,
-			cfg.Pass,
-			cfg.Host,
-			cfg.Port,
-			cfg.Name,
+			cfg.DBUser,
+			cfg.DBPass,
+			cfg.DBHost,
+			cfg.DBPort,
+			cfg.DBName,
 		)
 
 		db, err := sql.Open("mysql", dsn)

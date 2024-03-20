@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/hexisa_go_nal_todo/internal/pkg/config"
 	"github.com/hexisa_go_nal_todo/internal/user/app/command"
 )
 
@@ -35,11 +36,13 @@ func (sih *SignInHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	cfg := config.NewConfig()
+
 	cookie := http.Cookie{
 		Name:     "token",
 		Value:    jwt,
 		Path:     "/",
-		Domain:   "dev-todo.citcho.com",
+		Domain:   cfg.Server.ClientHost,
 		Expires:  time.Now().Add(24 * time.Hour),
 		Secure:   true,
 		SameSite: http.SameSiteLaxMode,

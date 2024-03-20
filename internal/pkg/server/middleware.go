@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
@@ -37,10 +38,10 @@ func jwtMiddleware(j *auth.JWTer) MiddlewareFunc {
 	}
 }
 
-func corsMiddleware(cfg config.Server) MiddlewareFunc {
+func corsMiddleware(cfg *config.Config) MiddlewareFunc {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Access-Control-Allow-Origin", cfg.ClientUrl)
+			w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("https://%s:%d", cfg.ClientHost, cfg.ClientPort))
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PATCH")
 			w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
 			w.Header().Set("Access-Control-Allow-Credentials", "true")

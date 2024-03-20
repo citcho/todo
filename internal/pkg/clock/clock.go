@@ -13,7 +13,8 @@ type Clocker interface {
 type RealClocker struct{}
 
 func (r RealClocker) Now() time.Time {
-	return time.Now()
+	jst := time.FixedZone("JST", 9*60*60)
+	return now.In(jst)
 }
 
 type FixedClocker struct{}
