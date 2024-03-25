@@ -1,0 +1,47 @@
+name: Deploy S3
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  BUCKET_NAME: '${{ secrets.BUCKET_NAME }}'
+  AWS_REGION: '${{ secrets.AWS_REGION }}'
+  AWS_ROLE_ARN: '${{ secrets.AWS_ROLE_ARN }}'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '/web/package.json'
+
+      - name: Install Dependencies
+        working-directory: web
+        run: npm install
+
+      - name: Build
+        working-directory: web
+        run: npm run build
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync S3
+        working-directory: web
+        run: |
+          aws s3 sync dist/ s3://${{ env.BUCKET_NAME }}/ --delete
