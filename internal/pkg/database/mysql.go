@@ -41,7 +41,6 @@ func NewDB(ctx context.Context, cfg config.DB) func() {
 
 		db, err := sql.Open("mysql", dsn)
 		if err != nil {
-			log.Fatalf("failed to open mysql: %v", err)
 			panic(err)
 		}
 
@@ -59,6 +58,7 @@ func NewDB(ctx context.Context, cfg config.DB) func() {
 		)
 
 		setDB(bundb)
+		log.Println("connected to database")
 	})
 
 	return func() { _ = db.Close() }
