@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	log.Println("starting server...")
 	if err := run(context.Background()); err != nil {
 		log.Printf("failed to terminated server: %v", err)
 		os.Exit(1)

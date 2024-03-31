@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"sync"
 	"time"
 
@@ -40,6 +41,7 @@ func NewDB(ctx context.Context, cfg config.DB) func() {
 
 		db, err := sql.Open("mysql", dsn)
 		if err != nil {
+			log.Fatalf("failed to open mysql: %v", err)
 			panic(err)
 		}
 
