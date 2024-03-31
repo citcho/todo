@@ -27,6 +27,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create Private Key File
+        run: |
+            echo "${{ secrets.PRIVATE_KEY }}" > ./internal/pkg/auth/cert/secret.pem
+      - name: Create Public Key File
+        run: |
+            echo "${{ secrets.PUBLIC_KEY }}" > ./internal/pkg/auth/cert/public.pem
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
