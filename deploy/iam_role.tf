@@ -1,11 +1,11 @@
 data "aws_iam_policy" "s3_full_access" {
   provider = aws.todo
-  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  arn      = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
 
 resource "aws_iam_role" "client_github_sync_s3_role" {
-  provider = aws.todo
+  provider    = aws.todo
   name        = "${local.project}_${local.env}_client_github_sync_s3_role"
   description = "github actions role."
 
@@ -32,14 +32,14 @@ resource "aws_iam_role" "client_github_sync_s3_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "s3_full_access" {
-  provider = aws.todo
+  provider   = aws.todo
   policy_arn = data.aws_iam_policy.s3_full_access.arn
   role       = aws_iam_role.client_github_sync_s3_role.name
 }
 
 resource "aws_iam_openid_connect_provider" "repo" {
   provider = aws.todo
-  url = "https://token.actions.githubusercontent.com"
+  url      = "https://token.actions.githubusercontent.com"
 
   client_id_list = [
     "sts.amazonaws.com",

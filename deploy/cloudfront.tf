@@ -38,7 +38,7 @@ resource "aws_cloudfront_distribution" "client_distribution" {
 }
 
 resource "aws_cloudfront_origin_access_control" "default" {
-  provider = aws.todo
+  provider                          = aws.todo
   name                              = "${local.project}_${local.env}_cloudfront_origin_access_control"
   description                       = "${local.project}_${local.env}_cloudfront_origin_access_control"
   origin_access_control_origin_type = "s3"
@@ -48,5 +48,5 @@ resource "aws_cloudfront_origin_access_control" "default" {
 
 data "aws_cloudfront_cache_policy" "CachingDisabled" {
   provider = aws.todo
-  name = "Managed-CachingDisabled"
+  name     = "Managed-CachingDisabled"
 }

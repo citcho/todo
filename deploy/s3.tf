@@ -1,11 +1,11 @@
 resource "aws_s3_bucket" "client_origin" {
   provider = aws.todo
-  bucket = "${local.project}-${local.env}-client-origin"
+  bucket   = "${local.project}-${local.env}-client-origin"
 }
 
 resource "aws_s3_bucket_ownership_controls" "client_origin_ownership_controls" {
   provider = aws.todo
-  bucket = aws_s3_bucket.client_origin.id
+  bucket   = aws_s3_bucket.client_origin.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
@@ -13,7 +13,7 @@ resource "aws_s3_bucket_ownership_controls" "client_origin_ownership_controls" {
 
 resource "aws_s3_bucket_public_access_block" "client_origin_public_access_block" {
   provider = aws.todo
-  bucket = aws_s3_bucket.client_origin.id
+  bucket   = aws_s3_bucket.client_origin.id
 
   block_public_acls       = false
   block_public_policy     = true
@@ -34,8 +34,8 @@ resource "aws_s3_bucket_acl" "client_origin_acl" {
 
 resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
   provider = aws.todo
-  bucket = aws_s3_bucket.client_origin.id
-  policy = data.aws_iam_policy_document.allow_access_from_cloudfront.json
+  bucket   = aws_s3_bucket.client_origin.id
+  policy   = data.aws_iam_policy_document.allow_access_from_cloudfront.json
 }
 
 data "aws_iam_policy_document" "allow_access_from_cloudfront" {
