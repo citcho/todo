@@ -22,6 +22,7 @@ func main() {
 
 func run(ctx context.Context) error {
 	cfg := config.NewConfig()
+	log.Printf("config: %+v", cfg)
 	closeDB := database.NewDB(ctx, cfg.DB)
 	defer closeDB()
 	mux := server.NewMux(ctx, cfg)
