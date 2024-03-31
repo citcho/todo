@@ -1,5 +1,6 @@
 resource "aws_cloudfront_distribution" "client_distribution" {
   provider = aws.todo
+  aliases = ["${local.domain}"]
   origin {
     domain_name              = aws_s3_bucket.client_origin.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.default.id
@@ -26,7 +27,10 @@ resource "aws_cloudfront_distribution" "client_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn            = aws_acm_certificate.virginia_cert.arn
+    cloudfront_default_certificate = false
+    minimum_protocol_version       = "TLSv1.2_2021"
+    ssl_support_method             = "sni-only"
   }
 
   custom_error_response {

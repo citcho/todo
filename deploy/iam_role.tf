@@ -6,8 +6,8 @@ data "aws_iam_policy" "s3_full_access" {
 
 resource "aws_iam_role" "client_github_sync_s3_role" {
   provider    = aws.todo
-  name        = "${local.project}_${local.env}_client_github_sync_s3_role"
-  description = "github actions role."
+  name        = "${local.project}-${local.env}-client-github-sync-s3-role"
+  description = "github actions role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
