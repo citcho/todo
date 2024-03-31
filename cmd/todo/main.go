@@ -26,11 +26,13 @@ func run(ctx context.Context) error {
 	closeDB := database.NewDB(ctx, cfg.DB)
 	defer closeDB()
 	mux := server.NewMux(ctx, cfg)
+	log.Println("create mux")
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Server.AppPort))
 	if err != nil {
 		log.Fatalf("failed to listen port %d: %v", cfg.Server.AppPort, err)
 	}
 
+	log.Println("start server...")
 	s := server.NewServer(l, mux)
 	return s.Run(ctx)
 }
