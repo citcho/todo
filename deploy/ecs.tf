@@ -68,6 +68,10 @@ resource "aws_ecs_task_definition" "app" {
           value = tostring(data.aws_ssm_parameter.app_port.value)
         },
         {
+          name  = "TODO_ENV"
+          value = tostring(data.aws_ssm_parameter.app_env.value)
+        },
+        {
           name  = "DB_NAME"
           value = tostring(data.aws_ssm_parameter.db_name.value)
         },

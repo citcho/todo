@@ -13,6 +13,11 @@ data "aws_ssm_parameter" "app_port" {
   name     = "/${local.project}/${local.env}/app/port"
 }
 
+data "aws_ssm_parameter" "app_env" {
+  provider = aws.todo
+  name     = "/${local.project}/${local.env}/app/env"
+}
+
 data "aws_ssm_parameter" "db_name" {
   provider = aws.todo
   name     = "/${local.project}/${local.env}/db/name"

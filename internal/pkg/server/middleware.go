@@ -41,7 +41,13 @@ func jwtMiddleware(j *auth.JWTer) MiddlewareFunc {
 func corsMiddleware(cfg *config.Config) MiddlewareFunc {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("https://%s", cfg.ClientHost))
+			// 開発環境だと443ポートの使い回しができないので、クライアントのポートを指定する
+			if cfg.AppEnv == "dev" {
+				w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("https://%s:%d", cfg.ClientHost, cfg.ClientPort))
+			}
+			if cfg.AppEnv == "prod" {
+				w.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("https://%s", cfg.ClientHost))
+			}
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PATCH")
 			w.Header().Set("Access-Control-Allow-Headers", "content-type, authorization")
 			w.Header().Set("Access-Control-Allow-Credentials", "true")

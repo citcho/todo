@@ -28,6 +28,7 @@ type Server struct {
 	ClientHost string `env:"CLIENT_HOST"`
 	ClientPort int    `env:"CLIENT_PORT"`
 	AppPort    int    `env:"TODO_PORT"`
+	AppEnv     string `env:"TODO_ENV" default:"dev"`
 }
 
 func NewConfig() *Config {
