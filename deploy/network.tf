@@ -5,24 +5,16 @@ module "vpc" {
     aws = aws.todo
   }
 
-  name           = "${local.project}-${local.env}-vpc"
-  azs            = formatlist("${local.region}%s", ["a", "c", "d"])
-  public_subnets = ["172.31.32.0/20", "172.31.0.0/20", "172.31.16.0/20"]
+  name            = "${local.project}-${local.env}-vpc"
+  azs             = formatlist("${local.region}%s", ["a", "c", "d"])
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  create_vpc                      = false
-  create_database_subnet_group    = false
-  create_egress_only_igw          = false
-  create_elasticache_subnet_group = false
-  create_igw                      = false
-  create_redshift_subnet_group    = false
+  database_subnet_group_name = "${local.project}-${local.env}-db-subnet-group"
 
-  manage_default_vpc               = true
-  manage_default_network_acl       = true
-  manage_default_route_table       = true
-  manage_default_security_group    = true
-  default_vpc_enable_dns_hostnames = true
-  default_security_group_name      = "default"
-  map_public_ip_on_launch          = true
+  create_database_subnet_group       = true
+  create_database_subnet_route_table = true
+  map_public_ip_on_launch            = true
 
   tags = {
     Name = "${local.project}-${local.env}-vpc"
