@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "client_distribution" {
   provider = aws.todo
-  aliases = ["${local.domain}"]
+  aliases  = ["${local.domain}"]
   origin {
     domain_name              = aws_s3_bucket.client_origin.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.default.id

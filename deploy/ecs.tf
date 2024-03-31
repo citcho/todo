@@ -21,9 +21,9 @@ resource "aws_ecs_service" "app" {
   desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
-    subnets         = module.vpc.private_subnets
-    security_groups = [aws_security_group.app_sg.id]
-    # assign_public_ip = true
+    subnets          = module.vpc.public_subnets
+    security_groups  = [aws_security_group.app_sg.id]
+    assign_public_ip = true
   }
 
   load_balancer {
@@ -46,8 +46,8 @@ resource "aws_ecs_task_definition" "app" {
       name      = "app"
       image     = "${aws_ecr_repository.app.repository_url}:latest"
       essential = true
-      cpu       = 1024
-      memory    = 2048
+      cpu       = 512
+      memory    = 1024
       portMappings = [
         {
           containerPort = tonumber(data.aws_ssm_parameter.app_port.value)
@@ -96,6 +96,15 @@ resource "aws_ecs_task_definition" "app" {
           value = tostring(data.aws_ssm_parameter.app_bundebug.value)
         },
       ]
+      logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          awslogs-create-group  = "true",
+          awslogs-group         = tostring(aws_cloudwatch_log_group.app.name),
+          awslogs-region        = local.region,
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     },
   ])
 }

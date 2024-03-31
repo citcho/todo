@@ -28,6 +28,16 @@ resource "aws_security_group_rule" "web_in_https" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
+resource "aws_security_group_rule" "web_out_app" {
+  provider                 = aws.todo
+  security_group_id        = aws_security_group.alb_sg.id
+  type                     = "egress"
+  protocol                 = "tcp"
+  from_port                = 80
+  to_port                  = 80
+  source_security_group_id = aws_security_group.app_sg.id
+}
+
 # ---------------------------------------------------------------------
 # ecs security group
 # ---------------------------------------------------------------------
@@ -56,6 +66,16 @@ resource "aws_security_group_rule" "app_out_rds" {
   from_port                = tonumber(data.aws_ssm_parameter.db_port.value)
   to_port                  = tonumber(data.aws_ssm_parameter.db_port.value)
   source_security_group_id = aws_security_group.rds_sg.id
+}
+
+resource "aws_security_group_rule" "app_out_tcp443" {
+  provider          = aws.todo
+  security_group_id = aws_security_group.app_sg.id
+  type              = "egress"
+  protocol          = "tcp"
+  from_port         = 443
+  to_port           = 443
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 # ---------------------------------------------------------------------

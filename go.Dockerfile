@@ -36,7 +36,6 @@ RUN go install -v golang.org/x/tools/gopls@latest \
     && go install github.com/golang/mock/mockgen@v1.6.0 \
     && go install github.com/cosmtrek/air@latest \
     && go install github.com/sqldef/sqldef/cmd/mysqldef@latest \
-    && go install github.com/cweill/gotests/gotests@latest \
     && go install github.com/cweill/gotests/gotests@latest
 
 CMD ["air", "-c", "./.air.toml"]
