@@ -8,12 +8,8 @@ RUN go mod download
 
 COPY . .
 
-# RUN go build -trimpath -ldflags "-w -s" -o app
-
-# WORKDIR /app/cmd/monolith
-# RUN go build -trimpath -ldflags "-w -s" -o ../../app
-# WORKDIR /app/cmd/migrate
-# RUN go build -trimpath -ldflags "-w -s" -o ../../migrate
+WORKDIR /app/cmd/todo
+RUN GOARCH=amd64 GOOS=linux go build -trimpath -ldflags "-w -s" -o ../../main
 
 # ------------------------------------------------------------
 
@@ -22,9 +18,11 @@ FROM debian:bookworm-slim as deploy
 
 RUN apt-get update
 
-COPY --from=deploy-builder /app/app .
+WORKDIR /app
 
-CMD ["./app"]
+COPY --from=deploy-builder /app/main /app/
+
+CMD ["./main"]
 
 # ------------------------------------------------------------
 
