@@ -22,10 +22,10 @@ test-integration: ## Execute integration tests
 migrate: ## Execute migration
 	docker compose exec -T api mysqldef -u citcho -p Secretp@ssw0rd -h db -P 3306 todo_db < ./_tools/mysql/schema.sql
 
-generate: ## Generate codes
+gen: ## Generate codes
 	docker compose exec api go generate ./...
 
-generate-key: ## Generate key pair for JWT
+gen-key: ## Generate key pair for JWT
 	openssl genrsa -out ./internal/pkg/auth/cert/secret.pem 4096 && \
     openssl rsa -in ./internal/pkg/auth/cert/secret.pem -pubout -out ./internal/pkg/auth/cert/public.pem
 
