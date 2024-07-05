@@ -34,7 +34,7 @@ WORKDIR /app
 RUN go install -v golang.org/x/tools/gopls@latest \
     && go install -v github.com/rogpeppe/godef@latest \
     && go install github.com/golang/mock/mockgen@v1.6.0 \
-    && go install github.com/cosmtrek/air@latest \
+    && go install github.com/air-verse/air@latest \
     && go install github.com/sqldef/sqldef/cmd/mysqldef@latest \
     && go install github.com/cweill/gotests/gotests@latest
 
