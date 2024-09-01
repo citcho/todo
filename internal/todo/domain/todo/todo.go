@@ -5,7 +5,7 @@ import (
 	"errors"
 	"unicode/utf8"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
+	"github.com/citcho/todo/internal/pkg/auth"
 )
 
 type Todo struct {

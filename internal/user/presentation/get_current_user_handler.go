@@ -3,7 +3,7 @@ package presentation
 import (
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/user/app/query"
+	"github.com/citcho/todo/internal/user/app/query"
 )
 
 type GetCurrentUserHandler struct {

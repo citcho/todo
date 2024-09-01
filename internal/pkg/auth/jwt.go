@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/citcho/todo/internal/pkg/clock"
+	"github.com/citcho/todo/internal/user/domain/user"
 	"github.com/google/uuid"
-	"github.com/hexisa_go_nal_todo/internal/pkg/clock"
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwk"
 	"github.com/lestrrat-go/jwx/v2/jwt"
@@ -56,7 +56,7 @@ func parse(rawKey []byte) (jwk.Key, error) {
 func (j *JWTer) GenerateToken(ctx context.Context, u *user.User) ([]byte, error) {
 	token, err := jwt.NewBuilder().
 		JwtID(uuid.New().String()).
-		Issuer(`github.com/citcho/hexisa_go_nal_todo`).
+		Issuer(`github.com/citcho/todo`).
 		Subject("access_token").
 		IssuedAt(j.Clocker.Now()).
 		Expiration(j.Clocker.Now().Add(30*time.Minute)).

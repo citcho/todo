@@ -42,7 +42,7 @@ resource "aws_iam_role" "client_github_sync_s3_role" {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           },
           "StringLike" : {
-            "token.actions.githubusercontent.com:sub" : "repo:citcho/hexisa_go_nal_todo:*"
+            "token.actions.githubusercontent.com:sub" : "repo:citcho/todo:*"
           }
         }
       }
@@ -69,7 +69,7 @@ resource "aws_iam_role" "app_github_ecr_push_role" {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           },
           "StringLike" : {
-            "token.actions.githubusercontent.com:sub" : "repo:citcho/hexisa_go_nal_todo:*"
+            "token.actions.githubusercontent.com:sub" : "repo:citcho/todo:*"
           }
         }
       }

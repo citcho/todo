@@ -3,11 +3,11 @@ package presentation
 import (
 	"log"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
-	"github.com/hexisa_go_nal_todo/internal/pkg/clock"
-	"github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/repository"
-	"github.com/hexisa_go_nal_todo/internal/user/app/command"
-	"github.com/hexisa_go_nal_todo/internal/user/app/query"
+	"github.com/citcho/todo/internal/pkg/auth"
+	"github.com/citcho/todo/internal/pkg/clock"
+	"github.com/citcho/todo/internal/user/adapter/mysql/repository"
+	"github.com/citcho/todo/internal/user/app/command"
+	"github.com/citcho/todo/internal/user/app/query"
 )
 
 type UserHandlers struct {

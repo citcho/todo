@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
+	"github.com/citcho/todo/internal/todo/domain/todo"
 )
 
 type CompleteCommand struct {

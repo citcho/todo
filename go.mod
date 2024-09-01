@@ -1,4 +1,4 @@
-module github.com/hexisa_go_nal_todo
+module github.com/citcho/todo
 
 go 1.22.0
 

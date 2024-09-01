@@ -3,8 +3,8 @@ package presentation
 import (
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/todo/app/query"
-	"github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
+	"github.com/citcho/todo/internal/todo/app/query"
+	"github.com/citcho/todo/internal/todo/domain/todo"
 )
 
 type GetTodosHandler struct {

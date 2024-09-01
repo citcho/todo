@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
+	"github.com/citcho/todo/internal/user/domain/user"
 	"golang.org/x/crypto/bcrypt"
 )
 

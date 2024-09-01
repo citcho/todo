@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	todo "github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
+	todo "github.com/citcho/todo/internal/todo/domain/todo"
 )
 
 // MockITodoRepository is a mock of ITodoRepository interface.

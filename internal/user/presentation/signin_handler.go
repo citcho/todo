@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/config"
-	"github.com/hexisa_go_nal_todo/internal/user/app/command"
+	"github.com/citcho/todo/internal/pkg/config"
+	"github.com/citcho/todo/internal/user/app/command"
 )
 
 type SignInHandler struct {

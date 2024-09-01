@@ -7,9 +7,9 @@ import (
 	"net"
 	"os"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/config"
-	"github.com/hexisa_go_nal_todo/internal/pkg/database"
-	"github.com/hexisa_go_nal_todo/internal/pkg/server"
+	"github.com/citcho/todo/internal/pkg/config"
+	"github.com/citcho/todo/internal/pkg/database"
+	"github.com/citcho/todo/internal/pkg/server"
 )
 
 func main() {

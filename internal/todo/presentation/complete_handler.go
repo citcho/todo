@@ -3,7 +3,7 @@ package presentation
 import (
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/todo/app/command"
+	"github.com/citcho/todo/internal/todo/app/command"
 )
 
 type CompleteHandler struct {

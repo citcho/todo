@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
+	"github.com/citcho/todo/internal/pkg/auth"
+	"github.com/citcho/todo/internal/user/domain/user"
 )
 
 type GetCurrentUser struct {

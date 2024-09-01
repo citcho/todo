@@ -3,7 +3,7 @@ package dao
 import (
 	"time"
 
-	"github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/dao"
+	"github.com/citcho/todo/internal/user/adapter/mysql/dao"
 )
 
 type Todo struct {

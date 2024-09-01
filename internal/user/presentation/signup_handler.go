@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/user/app/command"
+	"github.com/citcho/todo/internal/user/app/command"
 )
 
 type SignUpHandler struct {

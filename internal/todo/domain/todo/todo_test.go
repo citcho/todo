@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/citcho/todo/internal/todo/domain/todo"
 	"github.com/google/go-cmp/cmp"
-	"github.com/hexisa_go_nal_todo/internal/todo/domain/todo"
 )
 
 func TestNewTodo(t *testing.T) {

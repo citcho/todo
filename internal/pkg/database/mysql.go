@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/citcho/todo/internal/pkg/config"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/hexisa_go_nal_todo/internal/pkg/config"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mysqldialect"
 	"github.com/uptrace/bun/extra/bundebug"

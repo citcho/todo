@@ -6,10 +6,10 @@ import (
 	"log"
 	"time"
 
+	"github.com/citcho/todo/internal/pkg/database"
+	"github.com/citcho/todo/internal/user/adapter/mysql/dao"
+	"github.com/citcho/todo/internal/user/domain/user"
 	"github.com/go-sql-driver/mysql"
-	"github.com/hexisa_go_nal_todo/internal/pkg/database"
-	"github.com/hexisa_go_nal_todo/internal/user/adapter/mysql/dao"
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
 	"github.com/uptrace/bun"
 )
 

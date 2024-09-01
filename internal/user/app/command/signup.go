@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/encrypt"
-	"github.com/hexisa_go_nal_todo/internal/pkg/ulid"
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
+	"github.com/citcho/todo/internal/pkg/encrypt"
+	"github.com/citcho/todo/internal/pkg/ulid"
+	"github.com/citcho/todo/internal/user/domain/user"
 )
 
 type SignUpCommand struct {

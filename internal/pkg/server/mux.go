@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
-	"github.com/hexisa_go_nal_todo/internal/pkg/clock"
-	"github.com/hexisa_go_nal_todo/internal/pkg/config"
-	todo_presentation "github.com/hexisa_go_nal_todo/internal/todo/presentation"
-	user_presentation "github.com/hexisa_go_nal_todo/internal/user/presentation"
+	"github.com/citcho/todo/internal/pkg/auth"
+	"github.com/citcho/todo/internal/pkg/clock"
+	"github.com/citcho/todo/internal/pkg/config"
+	todo_presentation "github.com/citcho/todo/internal/todo/presentation"
+	user_presentation "github.com/citcho/todo/internal/user/presentation"
 )
 
 type preflightHandler struct{}

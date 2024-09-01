@@ -1,9 +1,9 @@
 package presentation
 
 import (
-	"github.com/hexisa_go_nal_todo/internal/todo/adapter/mysql/repository"
-	"github.com/hexisa_go_nal_todo/internal/todo/app/command"
-	"github.com/hexisa_go_nal_todo/internal/todo/app/query"
+	"github.com/citcho/todo/internal/todo/adapter/mysql/repository"
+	"github.com/citcho/todo/internal/todo/app/command"
+	"github.com/citcho/todo/internal/todo/app/query"
 )
 
 type TodoHandlers struct {

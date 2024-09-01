@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/hexisa_go_nal_todo/internal/pkg/auth"
-	"github.com/hexisa_go_nal_todo/internal/pkg/config"
+	"github.com/citcho/todo/internal/pkg/auth"
+	"github.com/citcho/todo/internal/pkg/config"
 )
 
 type Middleware interface {

@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
+	"github.com/citcho/todo/internal/user/domain/user"
+	"github.com/citcho/todo/internal/user/domain/user/mock"
 	"github.com/golang/mock/gomock"
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user"
-	"github.com/hexisa_go_nal_todo/internal/user/domain/user/mock"
 )
 
 func TestUserService_Exists(t *testing.T) {
