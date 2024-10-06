@@ -1,6 +1,6 @@
 # TODO SPA
 
-![go_version](https://img.shields.io/badge/go-1.22.0-blue.svg?logo=go) ![react_version](https://img.shields.io/badge/react-18.0.37-blue?logo=react) ![nodejs_version](https://img.shields.io/badge/node.js-18.16.0-blue.svg?logo=nodedotjs) ![npm_version](https://img.shields.io/badge/npm-9.5.1-blue.svg?logo=npm) ![nginx_version](https://img.shields.io/badge/nginx-1.25-blue.svg?logo=nginx) ![mysql_version](https://img.shields.io/badge/mysql-8.0-blue.svg?logo=mysql) ![terraform_version](https://img.shields.io/badge/terraform-1.7.5-blue.svg?logo=terraform)
+![go_version](https://img.shields.io/badge/go-1.23-blue.svg?logo=go) ![react_version](https://img.shields.io/badge/react-18.0.37-blue?logo=react) ![nodejs_version](https://img.shields.io/badge/node.js-18.16.0-blue.svg?logo=nodedotjs) ![npm_version](https://img.shields.io/badge/npm-9.5.1-blue.svg?logo=npm) ![nginx_version](https://img.shields.io/badge/nginx-1.27-blue.svg?logo=nginx) ![mysql_version](https://img.shields.io/badge/mysql-8.0-blue.svg?logo=mysql) ![terraform_version](https://img.shields.io/badge/terraform-1.7.5-blue.svg?logo=terraform)
 
 ## Features
 ### Auth
@@ -27,7 +27,7 @@
 ├── deploy    # インフラ系
 ├── docs      # ドキュメント
 ├── internal  # cmdで使用する内部ライブラリ
-│   ├── pkg      # 内部ライブラリ共有モジュール
+│   ├── pkg   # 内部ライブラリ共有モジュール
 │   │   ├── auth
 │   │   ├── clock
 │   │   ├── config
