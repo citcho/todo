@@ -1,5 +1,5 @@
 # バイナリ作成用コンテナステージ
-FROM golang:1.22.0-bookworm as deploy-builder
+FROM golang:1.23.0-bookworm AS deploy-builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN GOARCH=amd64 GOOS=linux go build -trimpath -ldflags "-w -s" -o ../../main
 # ------------------------------------------------------------
 
 # デプロイ用コンテナ
-FROM debian:bookworm-slim as deploy
+FROM debian:bookworm-slim AS deploy
 
 RUN apt-get update
 
@@ -27,7 +27,7 @@ CMD ["./main"]
 # ------------------------------------------------------------
 
 # ローカル用ライブリロード対応コンテナステージ
-FROM golang:1.22.0-bookworm as dev
+FROM golang:1.23.0-bookworm AS dev
 
 WORKDIR /app
 

@@ -53,7 +53,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f "go.Dockerfile" --target deploy .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f "Dockerfile" --target deploy .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:latest" >> $GITHUB_OUTPUT
 
